@@ -1,3 +1,4 @@
+// Scene.tsx
 "use client"
 
 import { useFrame } from "@react-three/fiber"
@@ -8,34 +9,27 @@ import Model from "./Model"
 type Props = {
   step: number
   progress: number
+  isMobile?: boolean
 }
 
-// Rotations to show different angles of the button
-// Step 0: Front view (normal)
-// Step 1: Side view (Y-axis rotation to show side)
-// Step 2: Top view (X-axis rotation to show top)
-// Step 3: Diagonal view (both X and Y rotation)
 const rotations = [
-  { x: 0, y: 0, z: 0 }, // Step 0: Önden görünüm
-  { x: 0, y: Math.PI / 2, z: 0 }, // Step 1: Yan taraftan görünüm
-  { x: -Math.PI / 2, y: 0, z: 0 }, // Step 2: Üstten görünüm
-  { x: -Math.PI / 4, y: Math.PI / 4, z: 0 }, // Step 3: Çapraz açıdan görünüm
+  { x: 0, y: 0, z: 0 },
+  { x: 0, y: Math.PI / 2, z: 0 },
+  { x: -Math.PI / 2, y: 0, z: 0 },
+  { x: -Math.PI / 4, y: Math.PI / 4, z: 0 },
 ]
 
-export default function Scene({ step, progress }: Props) {
+export default function Scene({ step, progress, isMobile = false }: Props) {
   const baseRotationRef = useRef(new THREE.Euler(0, 0, 0))
   const scaleRef = useRef(1.0)
   const rotationGroupRef = useRef<THREE.Group>(null)
   const modelGroupRef = useRef<THREE.Group>(null)
 
   useFrame((state, delta) => {
-    // Get target rotation based on step (position stays fixed at center)
     const targetRot = rotations[step] || rotations[0]
     
-    // Smooth interpolation
     const lerpFactor = 0.08
     
-    // Base rotation from step-based animation (no continuous spinning)
     baseRotationRef.current.x = THREE.MathUtils.lerp(
       baseRotationRef.current.x,
       targetRot.x,
@@ -52,7 +46,6 @@ export default function Scene({ step, progress }: Props) {
       lerpFactor
     )
 
-    // Update rotation group with step-based rotation only
     if (rotationGroupRef.current) {
       rotationGroupRef.current.rotation.set(
         baseRotationRef.current.x,
@@ -61,11 +54,12 @@ export default function Scene({ step, progress }: Props) {
       )
     }
 
-    // Scale animation for emphasis
-    const targetScale = 1.0 + Math.sin(progress * Math.PI * 2) * 0.05
+    // Scale değerleri artırıldı
+    const baseScale = isMobile ? 1.0 : 1.2  // Mobil: 0.7 → 1.0, Desktop: 1.0 → 1.2
+    const scaleEffect = isMobile ? 0.03 : 0.05
+    const targetScale = baseScale + Math.sin(progress * Math.PI * 2) * scaleEffect
     scaleRef.current = THREE.MathUtils.lerp(scaleRef.current, targetScale, 0.1)
     
-    // Update model scale directly
     if (modelGroupRef.current) {
       modelGroupRef.current.scale.setScalar(scaleRef.current)
     }
@@ -75,7 +69,7 @@ export default function Scene({ step, progress }: Props) {
     <group>
       <group ref={rotationGroupRef}>
         <group ref={modelGroupRef}>
-          <Model scale={1.0} />
+          <Model scale={isMobile ? 1.0 : 1.2} />  {/* Mobil: 0.7 → 1.0, Desktop: 1.0 → 1.2 */}
         </group>
       </group>
     </group>

@@ -1,101 +1,105 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [language, setLanguage] = useState<"TR" | "EN">("TR")
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [language, setLanguage] = useState<"TR" | "EN">("TR");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   const closeMenu = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
   const toggleLanguage = () => {
-    setLanguage(language === "TR" ? "EN" : "TR")
-  }
+    setLanguage(language === "TR" ? "EN" : "TR");
+  };
 
   const closeSearch = () => {
-    setIsSearchOpen(false)
-  }
+    setIsSearchOpen(false);
+  };
 
   // ESC tuşu ile search'ü kapat
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setIsSearchOpen(false)
+        setIsSearchOpen(false);
       }
-    }
-    window.addEventListener("keydown", handleEscape)
-    return () => window.removeEventListener("keydown", handleEscape)
-  }, [])
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, []);
 
   const menuItems = {
     TR: {
-      home: "Ana Sayfa",
-      quality: "Kalite",
-      import: "İthalat",
+      home: "Anasayfa",
       products: "Ürünler",
+      about: "Hakkımızda",
+      contact: "İletişim",
       search: "Ürün veya kategori ara...",
       whatsapp: "WhatsApp",
     },
     EN: {
       home: "Home",
-      quality: "Quality",
-      import: "Import",
       products: "Products",
+      about: "About Us",
+      contact: "Contact",
       search: "Search product or category...",
       whatsapp: "WhatsApp",
     },
-  }
+  };
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-200">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-l from-white/90 via-white/80 to-white/70 backdrop-blur-xl shadow-sm">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
-              
-               <a href="#"
-                className="text-2xl font-bold tracking-tight text-black hover:text-gray-700 transition-colors"
-              >
-                BİRLİK DÜĞME
+              <a href="#" className="flex items-center">
+                <img
+                  src="/img/birlikdugme_b.png" // Logo dosyanızın yolunu buraya ekleyin
+                  alt="Birlik Düğme"
+                  className="h-10 w-auto" // Logo boyutunu ihtiyacınıza göre ayarlayın
+                />
               </a>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-1">
-              
-               <a href="#home"
+              <a
+                href="#anasayfa"
                 className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
               >
                 {menuItems[language].home}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </a>
-              
-               <a href="#kalite"
-                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
-              >
-                {menuItems[language].quality}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-              </a>
-              
-               <a href="#ithalat"
-                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
-              >
-                {menuItems[language].import}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-              </a>
-              
-               <a href="#urunler"
+
+              <a
+                href="#urunler"
                 className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
               >
                 {menuItems[language].products}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+              </a>
+
+              <a
+                href="#hakkimizda"
+                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
+              >
+                {menuItems[language].about}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+              </a>
+
+              <a
+                href="#iletisim"
+                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
+              >
+                {menuItems[language].contact}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </a>
             </div>
@@ -105,7 +109,7 @@ export default function Navbar() {
               {/* Search Button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2.5 text-black hover:text-gray-600 hover:bg-gray-50 rounded-full transition-all"
+                className="p-2.5 text-black hover:text-gray-600 hover:bg-gray-100/50 rounded-full transition-all"
                 aria-label="Search"
               >
                 <svg
@@ -127,7 +131,7 @@ export default function Navbar() {
               {/* Language Toggle */}
               <button
                 onClick={toggleLanguage}
-                className="flex items-center space-x-1.5 px-3 py-2 text-black hover:text-gray-600 hover:bg-gray-50 rounded-full transition-all font-medium text-sm border border-gray-200"
+                className="flex items-center space-x-1.5 px-3 py-2 text-black hover:text-gray-600 hover:bg-gray-100/50 rounded-full transition-all font-medium text-sm border border-gray-200"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -147,8 +151,8 @@ export default function Navbar() {
               </button>
 
               {/* WhatsApp Button */}
-              
-               <a href="https://wa.me/905XXXXXXXXX"
+              <a
+                href="https://wa.me/905XXXXXXXXX"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 bg-[#25D366] text-white px-5 py-2.5 text-[15px] font-medium rounded-full hover:bg-[#20BA5A] transition-all shadow-sm hover:shadow-md hover:scale-105"
@@ -170,7 +174,7 @@ export default function Navbar() {
               {/* Mobile Search */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-black hover:text-gray-600 hover:bg-gray-50 rounded-full transition-all"
+                className="p-2 text-black hover:text-gray-600 hover:bg-gray-100/50 rounded-full transition-all"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +195,7 @@ export default function Navbar() {
               {/* Hamburger */}
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center justify-center p-2 rounded-full text-black hover:text-gray-600 hover:bg-gray-50 focus:outline-none transition-colors"
+                className="inline-flex items-center justify-center p-2 rounded-full text-black hover:text-gray-600 hover:bg-gray-100/50 focus:outline-none transition-colors"
               >
                 <span className="sr-only">Menü</span>
                 {!isOpen ? (
@@ -232,41 +236,44 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden bg-white border-t border-gray-100">
+          <div className="lg:hidden bg-white/90 backdrop-blur-xl border-t border-gray-100/50">
             <div className="px-4 pt-2 pb-4 space-y-1">
-              
-               <a href="#home"
+              <a
+                href="#anasayfa"
                 onClick={closeMenu}
-                className="text-black hover:text-gray-600 hover:bg-gray-50 block px-4 py-3 rounded-xl text-base font-medium transition-all"
+                className="text-black hover:text-gray-600 hover:bg-gray-100/50 block px-4 py-3 rounded-xl text-base font-medium transition-all"
               >
                 {menuItems[language].home}
               </a>
-              
-               <a href="#kalite"
+
+              <a
+                href="#urunler"
                 onClick={closeMenu}
-                className="text-black hover:text-gray-600 hover:bg-gray-50 block px-4 py-3 rounded-xl text-base font-medium transition-all"
-              >
-                {menuItems[language].quality}
-              </a>
-              
-               <a href="#ithalat"
-                onClick={closeMenu}
-                className="text-black hover:text-gray-600 hover:bg-gray-50 block px-4 py-3 rounded-xl text-base font-medium transition-all"
-              >
-                {menuItems[language].import}
-              </a>
-              
-               <a href="#urunler"
-                onClick={closeMenu}
-                className="text-black hover:text-gray-600 hover:bg-gray-50 block px-4 py-3 rounded-xl text-base font-medium transition-all"
+                className="text-black hover:text-gray-600 hover:bg-gray-100/50 block px-4 py-3 rounded-xl text-base font-medium transition-all"
               >
                 {menuItems[language].products}
+              </a>
+
+              <a
+                href="#hakkimizda"
+                onClick={closeMenu}
+                className="text-black hover:text-gray-600 hover:bg-gray-100/50 block px-4 py-3 rounded-xl text-base font-medium transition-all"
+              >
+                {menuItems[language].about}
+              </a>
+
+              <a
+                href="#iletisim"
+                onClick={closeMenu}
+                className="text-black hover:text-gray-600 hover:bg-gray-100/50 block px-4 py-3 rounded-xl text-base font-medium transition-all"
+              >
+                {menuItems[language].contact}
               </a>
 
               {/* Mobile Language Toggle */}
               <button
                 onClick={toggleLanguage}
-                className="w-full flex items-center justify-between px-4 py-3 text-black hover:bg-gray-50 rounded-xl transition-all font-medium"
+                className="w-full flex items-center justify-between px-4 py-3 text-black hover:bg-gray-100/50 rounded-xl transition-all font-medium"
               >
                 <span className="flex items-center space-x-2">
                   <svg
@@ -285,14 +292,14 @@ export default function Navbar() {
                   </svg>
                   <span>Language</span>
                 </span>
-                <span className="px-3 py-1 bg-gray-100 rounded-full text-sm font-semibold border border-gray-200">
+                <span className="px-3 py-1 bg-gray-100/70 rounded-full text-sm font-semibold border border-gray-200">
                   {language}
                 </span>
               </button>
 
               {/* Mobile WhatsApp Button */}
-              
-               <a href="https://wa.me/905XXXXXXXXX"
+              <a
+                href="https://wa.me/905XXXXXXXXX"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
@@ -327,7 +334,7 @@ export default function Navbar() {
             className="relative w-full max-w-2xl transition-all duration-500 ease-out animate-in zoom-in-95 slide-in-from-top-10"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-white rounded-2xl shadow-2xl p-2 transform transition-all duration-500">
+            <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl p-2 transform transition-all duration-500 border border-gray-200/50">
               {/* Search Input */}
               <div className="relative">
                 <svg
@@ -347,7 +354,7 @@ export default function Navbar() {
                 <input
                   type="text"
                   placeholder={menuItems[language].search}
-                  className="w-full px-16 py-5 text-lg text-black placeholder:text-gray-400 bg-white rounded-xl focus:outline-none transition-all duration-300"
+                  className="w-full px-16 py-5 text-lg text-black placeholder:text-gray-400 bg-transparent rounded-xl focus:outline-none transition-all duration-300"
                   autoFocus
                 />
                 <button
@@ -403,5 +410,5 @@ export default function Navbar() {
         </div>
       )}
     </>
-  )
+  );
 }

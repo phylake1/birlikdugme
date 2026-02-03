@@ -1,18 +1,30 @@
+// Model.tsx
 "use client"
 
-import { useGLTF } from "@react-three/drei"
-import { ThreeElements } from "@react-three/fiber"
+import { useGLTF, Center } from "@react-three/drei"
+import { useEffect } from "react"
 
-type Props = ThreeElements["group"]
+type Props = {
+  scale?: number
+}
 
-export default function Model(props: Props) {
-  const { scene } = useGLTF("/models/button.glb")
-
+export default function Model({ scale = 1 }: Props) {
+  const { scene } = useGLTF("/models/button2.glb") // Model path'ini kontrol et
+  
+  useEffect(() => {
+    if (scene) {
+      console.log("Model yüklendi")
+    }
+  }, [scene])
+  
   return (
-    <group {...props}>
-      <primitive object={scene} />
-    </group>
+    <Center>
+      <primitive 
+        object={scene} 
+        scale={scale}
+      />
+    </Center>
   )
 }
 
-useGLTF.preload("/models/button.glb")
+useGLTF.preload("/models/button2.glb")

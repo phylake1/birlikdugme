@@ -1,3 +1,4 @@
+// OverlayText.tsx
 "use client"
 
 import { useEffect, useState } from "react"
@@ -5,81 +6,102 @@ import { useEffect, useState } from "react"
 type Props = {
   step: number
   progress: number
+  isMobile?: boolean
 }
 
-type TextPosition = "left" | "right"
+type TextPosition = "top" | "bottom"
 
-// Text configurations with positions around the model
 const textConfigs: Array<{
   title: string
   description: string
   position: TextPosition
+  desktopPosition?: "left" | "right"
 }> = [
   {
     title: "Premium Ceket Düğmeleri",
     description: "Yüksek kaliteli malzemelerden üretilmiş, dayanıklı ve şık ceket düğmeleri. Her detayda mükemmellik arayanlar için.",
-    position: "left",
+    position: "bottom",
+    desktopPosition: "left",
   },
   {
     title: "Özenle İşlenmiş Detaylar",
     description: "Her düğme, geleneksel zanaatkarlık ile modern üretim tekniklerinin birleşimiyle yaratıldı. Yan profilde görünen detaylar, kalitemizin kanıtı.",
-    position: "right",
+    position: "top",
+    desktopPosition: "right",
   },
   {
     title: "Üstten Mükemmel Görünüm",
     description: "Düğmenin üst yüzeyi, pürüzsüz ve parlak bir finişe sahiptir. Her açıdan mükemmel görünüm için tasarlandı.",
-    position: "left",
+    position: "bottom",
+    desktopPosition: "left",
   },
   {
     title: "Çok Yönlü Tasarım",
     description: "Çapraz açıdan bakıldığında bile zarif ve dengeli bir görünüm sunan düğmelerimiz, ceketinizin tamamlayıcı parçası olarak öne çıkar.",
-    position: "right",
+    position: "top",
+    desktopPosition: "right",
   },
 ]
 
-export default function OverlayText({ step, progress }: Props) {
+export default function OverlayText({ step, progress, isMobile = false }: Props) {
   const [opacity, setOpacity] = useState(1)
   const [displayStep, setDisplayStep] = useState(step)
 
   useEffect(() => {
-    // Fade out
     setOpacity(0)
     
-    // After fade out, change content and fade in
     const timeout = setTimeout(() => {
       setDisplayStep(step)
       setOpacity(1)
-    }, 350) // Half of transition duration (700ms / 2)
+    }, 350)
 
     return () => clearTimeout(timeout)
   }, [step])
 
   const config = textConfigs[displayStep] || textConfigs[0]
 
-  // Position classes based on text position
-  const positionClasses = {
-    left: "items-center justify-start pl-12 md:pl-20",
-    right: "items-center justify-end pr-12 md:pr-20",
+  const mobilePositionClasses = {
+    top: "items-start justify-center pt-40 sm:pt-12 lg:pt-16",
+    bottom: "items-end justify-center pb-40 sm:pb-12 lg:pb-16",
+  }
+
+  const desktopPositionClasses = {
+    left: "items-center justify-start pl-8 md:pl-12 lg:pl-20",
+    right: "items-center justify-end pr-8 md:pr-12 lg:pr-20",
+  }
+
+  const getPositionClass = () => {
+    if (isMobile) {
+      return mobilePositionClasses[config.position]
+    }
+    return desktopPositionClasses[config.desktopPosition || "left"]
+  }
+
+  const getTextAlignment = () => {
+    if (isMobile) {
+      return "text-center"
+    }
+    return config.desktopPosition === "right" ? "text-right" : "text-left"
   }
 
   return (
-    <div className="pointer-events-none absolute inset-0 flex">
-      {/* Main text overlay */}
+    <div className="pointer-events-none absolute inset-0 flex z-10">
       <div
-        className={`flex ${positionClasses[config.position]} w-full transition-opacity duration-700 ease-in-out`}
+        className={`flex ${getPositionClass()} w-full transition-opacity duration-700 ease-in-out`}
         style={{ opacity }}
       >
-        <div className={`text-white max-w-xs md:max-w-sm transition-transform duration-700 ease-in-out ${config.position === "right" ? "text-right" : "text-left"}`}
-          style={{ transform: `translateY(${(1 - opacity) * 20}px)` }}>
-          <h2 className="text-lg md:text-xl lg:text-2xl font-semibold mb-2">
+        <div 
+          className={`text-white max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg px-4 sm:px-6 transition-transform duration-700 ease-in-out ${getTextAlignment()}`}
+          style={{ transform: `translateY(${(1 - opacity) * 20}px)` }}
+        >
+          <div className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold mb-2 sm:mb-3">
             {config.title}
-          </h2>
-          <p className="text-xs md:text-sm lg:text-base text-white leading-snug">
+          </div>
+          <div className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-200 leading-relaxed">
             {config.description}
-          </p>
+          </div>
         </div>
       </div>
-
     </div>
   )
 }
