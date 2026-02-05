@@ -1,88 +1,101 @@
 // OverlayText.tsx
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 type Props = {
-  step: number
-  progress: number
-  isMobile?: boolean
-}
+  step: number;
+  progress: number;
+  isMobile?: boolean;
+};
 
-type TextPosition = "top" | "bottom"
+type TextPosition = "top" | "bottom" | "center";
 
 const textConfigs: Array<{
-  title: string
-  description: string
-  position: TextPosition
-  desktopPosition?: "left" | "right"
+  title: string;
+  description: string;
+  position: TextPosition;
+  desktopPosition?: "left" | "right" | "center";
 }> = [
   {
     title: "Premium Ceket Düğmeleri",
-    description: "Yüksek kaliteli malzemelerden üretilmiş, dayanıklı ve şık ceket düğmeleri. Her detayda mükemmellik arayanlar için.",
+    description:
+      "Yüksek kaliteli malzemelerden üretilmiş, dayanıklı ve şık ceket düğmeleri. Her detayda mükemmellik arayanlar için.",
     position: "bottom",
-    desktopPosition: "left",
+    desktopPosition: "center",
   },
   {
     title: "Özenle İşlenmiş Detaylar",
-    description: "Her düğme, geleneksel zanaatkarlık ile modern üretim tekniklerinin birleşimiyle yaratıldı. Yan profilde görünen detaylar, kalitemizin kanıtı.",
+    description:
+      "Her düğme, geleneksel zanaatkarlık ile modern üretim tekniklerinin birleşimiyle yaratıldı. Yan profilde görünen detaylar, kalitemizin kanıtı.",
     position: "top",
     desktopPosition: "right",
   },
   {
     title: "Üstten Mükemmel Görünüm",
-    description: "Düğmenin üst yüzeyi, pürüzsüz ve parlak bir finişe sahiptir. Her açıdan mükemmel görünüm için tasarlandı.",
+    description:
+      "Düğmenin üst yüzeyi, pürüzsüz ve parlak bir finişe sahiptir. Her açıdan mükemmel görünüm için tasarlandı.",
     position: "bottom",
     desktopPosition: "left",
   },
   {
     title: "Çok Yönlü Tasarım",
-    description: "Çapraz açıdan bakıldığında bile zarif ve dengeli bir görünüm sunan düğmelerimiz, ceketinizin tamamlayıcı parçası olarak öne çıkar.",
+    description:
+      "Çapraz açıdan bakıldığında bile zarif ve dengeli bir görünüm sunan düğmelerimiz, ceketinizin tamamlayıcı parçası olarak öne çıkar.",
     position: "top",
     desktopPosition: "right",
   },
-]
+];
 
-export default function OverlayText({ step, progress, isMobile = false }: Props) {
-  const [opacity, setOpacity] = useState(1)
-  const [displayStep, setDisplayStep] = useState(step)
+export default function OverlayText({
+  step,
+  progress,
+  isMobile = false,
+}: Props) {
+  const [opacity, setOpacity] = useState(1);
+  const [displayStep, setDisplayStep] = useState(step);
 
   useEffect(() => {
-    setOpacity(0)
-    
+    setOpacity(0);
+
     const timeout = setTimeout(() => {
-      setDisplayStep(step)
-      setOpacity(1)
-    }, 350)
+      setDisplayStep(step);
+      setOpacity(1);
+    }, 350);
 
-    return () => clearTimeout(timeout)
-  }, [step])
+    return () => clearTimeout(timeout);
+  }, [step]);
 
-  const config = textConfigs[displayStep] || textConfigs[0]
+  const config = textConfigs[displayStep] || textConfigs[0];
 
   const mobilePositionClasses = {
     top: "items-start justify-center pt-40 sm:pt-12 lg:pt-16",
     bottom: "items-end justify-center pb-40 sm:pb-12 lg:pb-16",
-  }
+    center: "items-end justify-center pb-40 sm:pb-12 lg:pb-16",
+  };
 
   const desktopPositionClasses = {
     left: "items-center justify-start pl-8 md:pl-12 lg:pl-20",
     right: "items-center justify-end pr-8 md:pr-12 lg:pr-20",
-  }
+    center: "items-end justify-center pb-12 lg:pb-16",
+  };
 
   const getPositionClass = () => {
     if (isMobile) {
-      return mobilePositionClasses[config.position]
+      return mobilePositionClasses[config.position];
     }
-    return desktopPositionClasses[config.desktopPosition || "left"]
-  }
+    return desktopPositionClasses[config.desktopPosition || "left"];
+  };
 
   const getTextAlignment = () => {
     if (isMobile) {
-      return "text-center"
+      return "text-center";
     }
-    return config.desktopPosition === "right" ? "text-right" : "text-left"
-  }
+    if (config.desktopPosition === "center") {
+      return "text-center";
+    }
+    return config.desktopPosition === "right" ? "text-right" : "text-left";
+  };
 
   return (
     <div className="pointer-events-none absolute inset-0 flex z-10">
@@ -90,7 +103,7 @@ export default function OverlayText({ step, progress, isMobile = false }: Props)
         className={`flex ${getPositionClass()} w-full transition-opacity duration-700 ease-in-out`}
         style={{ opacity }}
       >
-        <div 
+        <div
           className={`text-white max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg px-4 sm:px-6 transition-transform duration-700 ease-in-out ${getTextAlignment()}`}
           style={{ transform: `translateY(${(1 - opacity) * 20}px)` }}
         >
@@ -103,5 +116,5 @@ export default function OverlayText({ step, progress, isMobile = false }: Props)
         </div>
       </div>
     </div>
-  )
+  );
 }

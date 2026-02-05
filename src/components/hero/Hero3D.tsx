@@ -80,7 +80,7 @@ export default function Hero3D() {
       <div className="absolute inset-0 w-full h-full">
         <Canvas 
           camera={{ 
-            position: isMobile ? [0, 0, 7] : [0, 0, 5], 
+            position: isMobile ? [0, 0, 7] : [0, 0, 6], 
             fov: isMobile ? 55 : 45 
           }}
           dpr={[1, 2]}
