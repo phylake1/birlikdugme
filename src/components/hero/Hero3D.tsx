@@ -65,7 +65,7 @@ export default function Hero3D() {
   // Henüz mount olmadıysa loading göster
   if (!mounted || isMobile === null) {
     return (
-      <section className="relative h-screen bg-black flex items-center justify-center">
+      <section id="#" className="relative h-screen bg-black flex items-center justify-center">
         <div className="text-white text-xl">Yükleniyor...</div>
       </section>
     )

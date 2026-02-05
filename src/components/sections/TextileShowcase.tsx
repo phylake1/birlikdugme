@@ -23,7 +23,7 @@ export default function BirlikDugme() {
     // HER ŞEYİ GİZLE
     gsap.set(".category-pill", { opacity: 0, scale: 0 });
     gsap.set(".product-card", { opacity: 0, y: 60 });
-    gsap.set(".feature-item", { opacity: 0, x: -50 });
+    gsap.set(".branch-card", { opacity: 0, y: 60 });
     gsap.set(".stat-item", { opacity: 0, y: 40 });
     gsap.set(".about-content", { opacity: 0, y: 50 });
     gsap.set(".about-image", { opacity: 0, scale: 0.95 });
@@ -83,16 +83,16 @@ export default function BirlikDugme() {
           },
         });
 
-        // Özellikler
-        gsap.to(".feature-item", {
+        // Şubeler - DAHA ERKEN TETİKLE
+        gsap.to(".branch-card", {
           opacity: 1,
-          x: 0,
-          duration: 1.0,
+          y: 0,
+          duration: 0.8,
           ease: "power3.out",
-          stagger: 0.18,
+          stagger: 0.15,
           scrollTrigger: {
-            trigger: ".features-section",
-            start: "top 75%",
+            trigger: ".branches-section",
+            start: "top 85%", // 75% → 85%
             markers: false,
           },
         });
@@ -214,30 +214,32 @@ export default function BirlikDugme() {
     { name: "Süs Taşları", desc: "Dekoratif amaçlı", image: "/img/8.jpg" },
   ];
 
+  const branches = [
+    {
+      name: "Bayrampaşa Şube",
+      address: "Merkez Mah. Tekstil Cad. No:123",
+      district: "Bayrampaşa",
+      city: "İstanbul",
+      phone: "+90 (212) XXX XX XX",
+      email: "info@birlikdugme.com",
+      hours: "Pazartesi - Cumartesi: 09:00 - 18:00",
+    },
+    {
+      name: "Merter Şube",
+      address: "Güngören Cad. Tekstilciler Sok. No:45",
+      district: "Güngören",
+      city: "İstanbul",
+      phone: "+90 (212) XXX XX XX",
+      email: "info@birlikdugme.com",
+      hours: "Pazartesi - Cumartesi: 09:00 - 18:00",
+    },
+  ];
+
   const stats = [
     { num: "25", suffix: "+", label: "Yıllık Tecrübe" },
     { num: "5K", suffix: "+", label: "Ürün Çeşidi" },
     { num: "1K", suffix: "+", label: "Mutlu Müşteri" },
     { num: "100", suffix: "%", label: "Memnuniyet" },
-  ];
-
-  const features = [
-    {
-      title: "Geniş Ürün Yelpazesi",
-      desc: "Düğmeden aksesuara kadar tüm tekstil ihtiyaçlarınız için binlerce ürün seçeneği",
-    },
-    {
-      title: "Kalite Garantisi",
-      desc: "Uluslararası standartlara uygun, test edilmiş ve onaylanmış ürünler",
-    },
-    {
-      title: "Hızlı Teslimat",
-      desc: "Stoklu ürünlerde aynı gün kargo, toplu siparişlerde hızlı üretim",
-    },
-    {
-      title: "Profesyonel Destek",
-      desc: "Uzman ekibimiz ürün seçiminden sonrasına kadar yanınızda",
-    },
   ];
 
   return (
@@ -256,16 +258,16 @@ export default function BirlikDugme() {
               </span>
             </p>
             <div className="hero-cta flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 px-4">
-              <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-full font-medium hover:bg-gray-900 transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
+              <a href="#products" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-full font-medium hover:bg-gray-900 transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
                 Ürünleri İncele
-              </button>
-              <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-gray-300 text-black rounded-full font-medium hover:border-black transition-all duration-300 text-sm sm:text-base">
+              </a>
+              <a href="#contact" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-gray-300 text-black rounded-full font-medium hover:border-black transition-all duration-300 text-sm sm:text-base">
                 İletişime Geç
-              </button>
+              </a>
             </div>
           </div>
 
-          <div className="categories-container max-w-6xl mx-auto px-4">
+          <div className="categories-container max-w-6xl mx-auto px-4 pt-10">
             <p className="text-center text-xs sm:text-sm text-gray-500 mb-6 sm:mb-10 uppercase tracking-wider font-light">
               Ürün Kategorilerimiz
             </p>
@@ -294,7 +296,7 @@ export default function BirlikDugme() {
       </section>
 
       {/* ÜRÜNLER */}
-      <section className="products-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="products" className="products-section px-16 sm:py-24 lg:py-15 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-16 lg:mb-20">
             <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-black mb-3 sm:mb-4">
@@ -334,42 +336,77 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      {/* ÖZELLİKLER */}
-      <section className="features-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20 items-center">
-            <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl bg-gray-200">
-              <img
-                src="/img/whybd.jpg"
-                alt="Birlik Düğme"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-black/40" />
-            </div>
-            <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-8 sm:mb-10 lg:mb-12">
-                Neden Birlik Düğme?
-              </h2>
-              <div className="space-y-6 sm:space-y-8">
-                {features.map((f, i) => (
-                  <div
-                    key={i}
-                    className="feature-item flex items-start gap-3 sm:gap-4 lg:gap-5"
-                  >
-                    <div className="w-0.5 sm:w-1 h-10 sm:h-12 bg-orange-500 flex-shrink-0" />
+      {/* ŞUBELER */}
+     <section id="branches" className="branches-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-light text-black mb-3 sm:mb-4">
+              Şubelerimiz
+            </h2>
+            <div className="w-16 sm:w-20 h-px bg-orange-500 mx-auto mb-6" />
+            <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto font-light px-4">
+              İstanbul'da iki farklı noktadan hizmet veriyoruz
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
+            {branches.map((branch, index) => (
+              <div
+                key={index}
+                className="branch-card group bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-orange-500 transition-all duration-200 p-7 sm:p-8"
+              >
+                <div className="flex items-start justify-between mb-6">
+                  <h3 className="text-2xl sm:text-3xl font-light text-black">
+                    {branch.name}
+                  </h3>
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 flex-shrink-0" />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 mt-1" />
                     <div>
-                      <h3 className="text-base sm:text-lg lg:text-xl font-medium text-black mb-1 sm:mb-2">
-                        {f.title}
-                      </h3>
-                      <p className="text-sm sm:text-base text-gray-600 font-light leading-relaxed">
-                        {f.desc}
+                      <p className="text-sm sm:text-base text-gray-900 font-light">
+                        {branch.address}
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-500 font-light mt-1">
+                        {branch.district}, {branch.city}
                       </p>
                     </div>
                   </div>
-                ))}
+
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
+                    
+                     <a href={`tel:${branch.phone.replace(/\s/g, "")}`}
+                      className="text-sm sm:text-base text-gray-900 font-light hover:text-orange-500 transition-colors"
+                    >
+                      {branch.phone}
+                    </a>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
+                    
+                     <a href={`mailto:${branch.email}`}
+                      className="text-sm sm:text-base text-gray-900 font-light hover:text-orange-500 transition-colors"
+                    >
+                      {branch.email}
+                    </a>
+                  </div>
+
+                  <div className="pt-4 border-t border-gray-100">
+                    <p className="text-sm text-gray-500 font-light">
+                      {branch.hours}
+                    </p>
+                  </div>
+                </div>
+
+                <button className="w-full mt-6 px-5 py-2.5 sm:py-3 bg-black text-white rounded-full font-light hover:bg-gray-900 transition-all duration-300 text-sm sm:text-base">
+                  Yol Tarifi Al
+                </button>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -399,7 +436,7 @@ export default function BirlikDugme() {
       </section>
 
       {/* HAKKIMIZDA */}
-      <section className="about-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section id="about" className="about-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20 items-center">
             <div>
@@ -433,7 +470,7 @@ export default function BirlikDugme() {
       </section>
 
       {/* İLETİŞİM */}
-      <section className="contact-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="contact" className="contact-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 sm:mb-16 lg:mb-20">
             <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-black mb-3 sm:mb-4">
@@ -516,7 +553,7 @@ export default function BirlikDugme() {
       <section className="cta-section relative py-20 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
         <div className="cta-content max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-black mb-4 sm:mb-6 leading-tight">
-            Projeleriniz İçin
+            Doğru Ürün
             <span className="block mt-2 font-normal">Doğru Adres</span>
           </h2>
           <div className="w-16 sm:w-20 lg:w-24 h-px bg-orange-500 mx-auto mb-6 sm:mb-8" />
@@ -525,9 +562,9 @@ export default function BirlikDugme() {
             geçin
           </p>
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-            <button className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-black text-white rounded-full text-base sm:text-lg font-light hover:bg-gray-900 transition-all duration-300 hover:scale-105 shadow-lg">
+            <a href="https://wa.me/905XXXXXXXXX" className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-black text-white rounded-full text-base sm:text-lg font-light hover:bg-gray-900 transition-all duration-300 hover:scale-105 shadow-lg">
               Fiyat Teklifi Alın
-            </button>
+            </a>
             <button className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 border border-gray-300 text-black rounded-full text-base sm:text-lg font-light hover:border-black transition-all duration-300">
               Katalog İndirin
             </button>
@@ -570,7 +607,7 @@ export default function BirlikDugme() {
                 Hızlı Bağlantılar
               </h4>
               <ul className="space-y-2 sm:space-y-3">
-                {["Ana Sayfa", "Ürünler", "Hakkımızda", "İletişim", "SSS"].map(
+                {["Ana Sayfa", "Ürünler", "Şubeler", "Hakkımızda", "İletişim"].map(
                   (link) => (
                     <li key={link}>
                       

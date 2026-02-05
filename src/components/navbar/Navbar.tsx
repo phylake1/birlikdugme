@@ -55,6 +55,7 @@ export default function Navbar() {
     TR: {
       home: "Anasayfa",
       products: "Ürünler",
+      franchise: "Şubeler",
       about: "Hakkımızda",
       contact: "İletişim",
       search: "Ürün veya kategori ara...",
@@ -63,6 +64,7 @@ export default function Navbar() {
     EN: {
       home: "Home",
       products: "Products",
+      franchise: "Branches",
       about: "About Us",
       contact: "Contact",
       search: "Search product or category...",
@@ -89,7 +91,7 @@ export default function Navbar() {
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-1">
               
-               <a href="#anasayfa"
+               <a href="#"
                 className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
               >
                 {menuItems[language].home}
@@ -97,15 +99,22 @@ export default function Navbar() {
               </a>
 
               
-              <a  href="#urunler"
+              <a  href="#products"
                 className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
               >
                 {menuItems[language].products}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </a>
 
+              <a  href="#branches"
+                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
+              >
+                {menuItems[language].franchise}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+              </a>
+
               
-               <a href="#hakkimizda"
+               <a href="#about"
                 className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
               >
                 {menuItems[language].about}
@@ -113,7 +122,7 @@ export default function Navbar() {
               </a>
 
               
-               <a href="#iletisim"
+               <a href="#contact"
                 className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
               >
                 {menuItems[language].contact}
@@ -304,7 +313,7 @@ export default function Navbar() {
                   delay: 150,
                 },
                 {
-                  href: "#hakkimizda",
+                  href: "#about",
                   label: menuItems[language].about,
                   delay: 200,
                 },
@@ -510,21 +519,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* Custom Animations */}
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        .animate-fadeIn {
-          animation: fadeIn 0.6s ease-out forwards;
-        }
-      `}</style>
+    
     </>
   );
 }

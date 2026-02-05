@@ -18,30 +18,30 @@ const textConfigs: Array<{
   desktopPosition?: "left" | "right" | "center";
 }> = [
   {
-    title: "Premium Ceket Düğmeleri",
+    title: "Kalite Detaylarda Gizlidir",
     description:
-      "Yüksek kaliteli malzemelerden üretilmiş, dayanıklı ve şık ceket düğmeleri. Her detayda mükemmellik arayanlar için.",
+      "Yüksek kaliteli malzemelerden üretilen dayanıklı ve şık düğmeler. Birlik Düğme, her üründe estetik ve uzun ömürlü kullanım sunar.",
     position: "bottom",
     desktopPosition: "center",
   },
   {
-    title: "Özenle İşlenmiş Detaylar",
+    title: "Geniş Ürün Yelpazesi",
     description:
-      "Her düğme, geleneksel zanaatkarlık ile modern üretim tekniklerinin birleşimiyle yaratıldı. Yan profilde görünen detaylar, kalitemizin kanıtı.",
+      "Farklı model ve tasarımlarla her ihtiyaca uygun çözümler. Zengin çeşitlilik ve sürekli stok avantajı her zaman yanınızda.",
     position: "top",
     desktopPosition: "right",
   },
   {
-    title: "Üstten Mükemmel Görünüm",
+    title: "İthal Kalite, Uygun Fiyat",
     description:
-      "Düğmenin üst yüzeyi, pürüzsüz ve parlak bir finişe sahiptir. Her açıdan mükemmel görünüm için tasarlandı.",
+      "Dünyanın seçkin üreticilerinden ithal edilen düğmeler, Birlik Düğme güvencesiyle ulaşılabilir fiyatlarla sunulur.",
     position: "bottom",
     desktopPosition: "left",
   },
   {
-    title: "Çok Yönlü Tasarım",
+    title: "Sektörün Güvenilir Tercihi",
     description:
-      "Çapraz açıdan bakıldığında bile zarif ve dengeli bir görünüm sunan düğmelerimiz, ceketinizin tamamlayıcı parçası olarak öne çıkar.",
+      "Tekstil profesyonellerinin yıllardır tercih ettiği marka. Güvenilir tedarik, istikrarlı kalite ve hızlı temin.",
     position: "top",
     desktopPosition: "right",
   },
