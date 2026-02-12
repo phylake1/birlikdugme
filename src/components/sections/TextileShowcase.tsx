@@ -20,7 +20,6 @@ export default function BirlikDugme() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // HER ŞEYİ GİZLE
     gsap.set(".category-pill", { opacity: 0, scale: 0 });
     gsap.set(".product-card", { opacity: 0, y: 60 });
     gsap.set(".branch-card", { opacity: 0, y: 60 });
@@ -30,10 +29,9 @@ export default function BirlikDugme() {
     gsap.set(".contact-item", { opacity: 0, y: 40 });
     gsap.set(".cta-content", { opacity: 0, y: 50 });
 
-    // 500ms BEKLE - Hero3D'nin setup'ı bitsin
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
-        // Hero başlıkları
+
         gsap.from(".hero-title", {
           opacity: 0,
           y: 80,
@@ -55,7 +53,6 @@ export default function BirlikDugme() {
           ease: "power3.out",
         });
 
-        // Kategori pilleri
         gsap.to(".category-pill", {
           opacity: 1,
           scale: 1,
@@ -69,7 +66,6 @@ export default function BirlikDugme() {
           },
         });
 
-        // Ürünler
         gsap.to(".product-card", {
           opacity: 1,
           y: 0,
@@ -83,7 +79,6 @@ export default function BirlikDugme() {
           },
         });
 
-        // Şubeler - DAHA ERKEN TETİKLE
         gsap.to(".branch-card", {
           opacity: 1,
           y: 0,
@@ -92,12 +87,11 @@ export default function BirlikDugme() {
           stagger: 0.15,
           scrollTrigger: {
             trigger: ".branches-section",
-            start: "top 85%", // 75% → 85%
+            start: "top 85%",
             markers: false,
           },
         });
 
-        // İstatistikler
         gsap.to(".stat-item", {
           opacity: 1,
           y: 0,
@@ -111,7 +105,6 @@ export default function BirlikDugme() {
           },
         });
 
-        // Hakkımızda
         gsap.to(".about-content", {
           opacity: 1,
           y: 0,
@@ -136,7 +129,6 @@ export default function BirlikDugme() {
           },
         });
 
-        // İletişim
         gsap.to(".contact-item", {
           opacity: 1,
           y: 0,
@@ -150,7 +142,6 @@ export default function BirlikDugme() {
           },
         });
 
-        // Banner
         gsap.to(".scroll-banner", {
           xPercent: -50,
           repeat: -1,
@@ -158,7 +149,6 @@ export default function BirlikDugme() {
           ease: "linear",
         });
 
-        // CTA
         gsap.to(".cta-content", {
           opacity: 1,
           y: 0,
@@ -171,7 +161,6 @@ export default function BirlikDugme() {
           },
         });
 
-        // Refresh - Hero3D'den sonra
         setTimeout(() => ScrollTrigger.refresh(), 100);
       }, containerRef);
 
@@ -295,7 +284,6 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      {/* ÜRÜNLER */}
       <section id="products" className="products-section px-16 sm:py-24 lg:py-15 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-16 lg:mb-20">
@@ -336,7 +324,6 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      {/* ŞUBELER */}
      <section id="branches" className="branches-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
@@ -411,7 +398,6 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      {/* İSTATİSTİKLER */}
       <section className="stats-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
@@ -435,7 +421,6 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      {/* HAKKIMIZDA */}
       <section id="about" className="about-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20 items-center">
@@ -469,7 +454,6 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      {/* İLETİŞİM */}
       <section id="contact" className="contact-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 sm:mb-16 lg:mb-20">
@@ -549,7 +533,6 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="cta-section relative py-20 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
         <div className="cta-content max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-black mb-4 sm:mb-6 leading-tight">
@@ -572,7 +555,6 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16 mb-12 sm:mb-16">
