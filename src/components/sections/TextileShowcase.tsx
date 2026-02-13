@@ -229,7 +229,7 @@ export default function BirlikDugme() {
       email: "info@birlikdugme.com",
       hours: "Pazartesi - Cumartesi: 08:00 - 19:00",
       mapUrl:
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.4937485415994!2d28.88412667649509!3d41.01445257134959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabb193236e931%3A0x590ba06f68bb744a!2zQmlybGlrIETDvMSfbWUgJiBBa3Nlc3Vhcg!5e0!3m2!1sen!2str!4v1770919205247!5m2!1sen!2str",
+        "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2673.360982833811!2d28.887303524085496!3d41.07079441005523!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab993b2183c4b%3A0x471582527d895d73!2zQmlybGlrIETDvMSfbWUgJiBBa3Nlc3Vhcg!5e0!3m2!1sen!2str!4v1771014989298!5m2!1sen!2str",
       mapsLink: "https://maps.app.goo.gl/VRnL3uyqvXApspLR8",
     },
     {
@@ -352,7 +352,7 @@ export default function BirlikDugme() {
 
       <section
         id="branches"
-        className="branches-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-50"
+        className="branches-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white-50"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
@@ -466,7 +466,7 @@ export default function BirlikDugme() {
         </div>
       </section>
 
-      <section className="stats-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="stats-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
             {stats.map((stat, index) => (
@@ -512,23 +512,18 @@ export default function BirlikDugme() {
               <div className="about-content w-16 sm:w-20 lg:w-24 h-px bg-orange-500 mb-6 sm:mb-8" />
               <div className="about-content space-y-4 sm:space-y-6 text-sm sm:text-base lg:text-lg text-gray-600 font-light leading-relaxed">
                 <p>
-                  1999 yılından bu yana tekstil sektörünün vazgeçilmez
-                  aksesuarları olan düğme, fermuar, toka ve benzeri ürünlerin
-                  ithalatında uzmanlaşmış bir firma olarak hizmet veriyoruz.
+                  Birlik Düğme, 37 yılı aşkın tecrübesiyle tekstil aksesuarları
+                  alanında faaliyet gösteren köklü bir ithalat ve tedarik
+                  firmasıdır. Düğme, fermuar ve benzeri ürünlerde yüksek stok
+                  kapasitesi ve geniş ürün çeşitliliği ile Türkiye genelinde
+                  üreticilere hizmet vermektedir.
                 </p>
                 <p>
-                  Çeyrek asrı aşkın tecrübemizle, sektörün önde gelen
-                  firmalarına kaliteli ve güvenilir ürünler sunmanın gururunu
-                  yaşıyoruz. Geniş ürün yelpazemiz ve müşteri odaklı
-                  yaklaşımımız ile tekstil sektörünün her alanına hitap
-                  ediyoruz.
-                </p>
-                <p>
-                  Kalite kontrol süreçlerimiz ve uluslararası tedarikçi ağımız
-                  sayesinde, müşterilerimize en iyi ürünleri en uygun fiyatlarla
-                  sunuyoruz. Hızlı teslimat, esnek ödeme seçenekleri ve
-                  profesyonel müşteri hizmetlerimiz ile sektörde fark
-                  yaratıyoruz.
+                  Uluslararası tedarik ağımız, güçlü stok yapımız ve
+                  sürdürülebilir fiyat politikamız sayesinde binlerce firma
+                  tarafından tercih edilen güvenilir bir çözüm ortağıyız. Merter
+                  ve Bayrampaşa’daki iki şubemizle sektöre hızlı ve istikrarlı
+                  tedarik sağlıyoruz.
                 </p>
               </div>
             </div>
@@ -665,8 +660,7 @@ export default function BirlikDugme() {
                 />
               </a>
               <p className="text-white-100 opacity-70 mb-6 sm:mb-8 leading-relaxed font-light max-w-md text-sm sm:text-base">
-                1999'dan beri tekstil sektörüne kaliteli düğme ve aksesuar
-                tedariki yapan güvenilir firmanız.
+                37 yıllık tecrübe. Güçlü stok. Güvenilir tedarik.
               </p>
               <div className="flex gap-3 sm:gap-4">
                 {socials.map((social) => {

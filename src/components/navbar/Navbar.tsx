@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguage] = useState<"TR" | "EN">("TR");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSearchClosing, setIsSearchClosing] = useState(false);
+  const { language, toggleLanguage, t } = useLanguage();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -14,10 +15,8 @@ export default function Navbar() {
 
   const closeMenu = () => {
     setIsOpen(false);
-  };
-
-  const toggleLanguage = () => {
-    setLanguage(language === "TR" ? "EN" : "TR");
+    setIsSearchOpen(false);
+    setIsSearchClosing(false);
   };
 
   const closeSearch = () => {

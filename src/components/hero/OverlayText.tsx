@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Props = {
   step: number;
@@ -11,42 +12,6 @@ type Props = {
 
 type TextPosition = "top" | "bottom" | "center";
 
-const textConfigs: Array<{
-  title: string;
-  description: string;
-  position: TextPosition;
-  desktopPosition?: "left" | "right" | "center";
-}> = [
-  {
-    title: "Kalite Detaylarda Gizlidir",
-    description:
-      "Yüksek kaliteli malzemelerden üretilen dayanıklı ve şık düğmeler. Birlik Düğme, her üründe estetik ve uzun ömürlü kullanım sunar.",
-    position: "bottom",
-    desktopPosition: "center",
-  },
-  {
-    title: "Geniş Ürün Yelpazesi",
-    description:
-      "Farklı model ve tasarımlarla her ihtiyaca uygun çözümler. Zengin çeşitlilik ve sürekli stok avantajı her zaman yanınızda.",
-    position: "top",
-    desktopPosition: "right",
-  },
-  {
-    title: "İthal Kalite, Uygun Fiyat",
-    description:
-      "Dünyanın seçkin üreticilerinden ithal edilen düğmeler, Birlik Düğme güvencesiyle ulaşılabilir fiyatlarla sunulur.",
-    position: "bottom",
-    desktopPosition: "left",
-  },
-  {
-    title: "Sektörün Güvenilir Tercihi",
-    description:
-      "Tekstil profesyonellerinin yıllardır tercih ettiği marka. Güvenilir tedarik, istikrarlı kalite ve hızlı temin.",
-    position: "top",
-    desktopPosition: "right",
-  },
-];
-
 export default function OverlayText({
   step,
   progress,
@@ -54,6 +19,34 @@ export default function OverlayText({
 }: Props) {
   const [opacity, setOpacity] = useState(1);
   const [displayStep, setDisplayStep] = useState(step);
+  const { t } = useLanguage();
+
+  const textConfigs = [
+    {
+      title: t("overlayTitle1"),
+      description: t("overlayDesc1"),
+      position: "bottom" as TextPosition,
+      desktopPosition: "center",
+    },
+    {
+      title: t("overlayTitle2"),
+      description: t("overlayDesc2"),
+      position: "top" as TextPosition,
+      desktopPosition: "right",
+    },
+    {
+      title: t("overlayTitle3"),
+      description: t("overlayDesc3"),
+      position: "bottom" as TextPosition,
+      desktopPosition: "left",
+    },
+    {
+      title: t("overlayTitle4"),
+      description: t("overlayDesc4"),
+      position: "top" as TextPosition,
+      desktopPosition: "right",
+    },
+  ];
 
   useEffect(() => {
     setOpacity(0);
@@ -68,13 +61,13 @@ export default function OverlayText({
 
   const config = textConfigs[displayStep] || textConfigs[0];
 
-  const mobilePositionClasses = {
+  const mobilePositionClasses: Record<TextPosition, string> = {
     top: "items-start justify-center pt-40 sm:pt-12 lg:pt-16",
     bottom: "items-end justify-center pb-40 sm:pb-12 lg:pb-16",
     center: "items-end justify-center pb-40 sm:pb-12 lg:pb-16",
   };
 
-  const desktopPositionClasses = {
+  const desktopPositionClasses: Record<"left" | "right" | "center", string> = {
     left: "items-center justify-start pl-8 md:pl-12 lg:pl-20",
     right: "items-center justify-end pr-8 md:pr-12 lg:pr-20",
     center: "items-end justify-center pb-12 lg:pb-16",

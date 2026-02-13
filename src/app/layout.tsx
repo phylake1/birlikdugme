@@ -1,5 +1,6 @@
 import "./globals.css"
 import Navbar from "@/components/navbar/Navbar"
+import { LanguageProvider } from "@/contexts/LanguageContext"
 import { Search } from "lucide-react";
 
 import type { Metadata } from "next";
@@ -53,8 +54,10 @@ export default function RootLayout({
         <link rel="icon" href="/img/favicon.png" type="image/png" />
       </head>
       <body>
-        <Navbar />
-        {children}
+        <LanguageProvider>
+          <Navbar />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   )
