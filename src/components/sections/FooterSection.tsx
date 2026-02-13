@@ -103,11 +103,11 @@ export default function FooterSection() {
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
             <a
               href="https://wa.me/905536952434"
-              className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-black text-white rounded-full text-base sm:text-lg font-light hover:bg-orange-500 transition-all duration-300 hover:scale-105 shadow-lg"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-full font-medium hover:bg-orange-500 transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base"
             >
               {t("ctaButtonQuote")}
             </a>
-            <button className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 border border-gray-300 text-black rounded-full text-base sm:text-lg font-light hover:border-orange-500 transition-all duration-300 hover:text-orange-500 duration-300">
+            <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-gray-300 text-black rounded-full font-medium hover:border-orange-500 transition-all duration-300 text-sm sm:text-base hover:text-orange-500 duration-300">
               {t("ctaButtonCatalog")}
             </button>
           </div>
@@ -152,13 +152,13 @@ export default function FooterSection() {
               </h4>
               <ul className="space-y-2 sm:space-y-3 ">
                 {[
-                  { name: t("home"), href: "/" },
-                  { name: t("products"), href: "#products" },
-                  { name: t("branches"), href: "#branches" },
-                  { name: t("about"), href: "#about" },
-                  { name: t("contact"), href: "#contact" },
+                  { key: "home", name: t("home"), href: "/" },
+                  { key: "products", name: t("products"), href: "#products" },
+                  { key: "branches", name: t("branches"), href: "#branches" },
+                  { key: "about", name: t("about"), href: "#about" },
+                  { key: "contact", name: t("contact"), href: "#contact" },
                 ].map((link) => (
-                  <li key={link.name}>
+                  <li key={link.key}>
                     <a
                       href={link.href}
                       className="text-white-100 opacity-70 hover:text-orange-500 transition-colors duration-300 font-light text-sm sm:text-base"

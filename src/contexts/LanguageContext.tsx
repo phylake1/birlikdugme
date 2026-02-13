@@ -8,7 +8,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   toggleLanguage: () => void;
-  t: (key: string) => string;
+  t: (key: string) => string | string[];
 }
 
 const translations = {
@@ -257,8 +257,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLanguage(language === "TR" ? "EN" : "TR");
   };
 
-  const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations.TR] || key;
+  const t = (key: string): string | string[] => {
+    const value = translations[language][key as keyof typeof translations.TR];
+    return value || key;
   };
 
   return (

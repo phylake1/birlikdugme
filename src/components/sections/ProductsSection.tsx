@@ -44,25 +44,61 @@ export default function ProductsSection() {
 
   const products = [
     {
+      key: "classicButtons",
       name: t("classicButtons"),
       desc: t("classicButtonsDesc"),
       image: "/img/1.jpg",
+      alt: "Classic Buttons",
     },
     {
+      key: "decorativeButtons",
       name: t("decorativeButtons"),
       desc: t("decorativeButtonsDesc"),
       image: "/img/2.jpg",
+      alt: "Decorative Buttons",
     },
     {
+      key: "metalAccessories",
       name: t("metalAccessories"),
       desc: t("metalAccessoriesDesc"),
       image: "/img/3.jpg",
+      alt: "Metal Accessories",
     },
-    { name: t("zippers"), desc: t("zippersDesc"), image: "/img/4.jpg" },
-    { name: t("buckles"), desc: t("bucklesDesc"), image: "/img/5.jpg" },
-    { name: t("snapFasteners"), desc: t("snapFastenersDesc"), image: "/img/6.jpg" },
-    { name: t("labels"), desc: t("labelsDesc"), image: "/img/7.jpg" },
-    { name: t("decorativeStones"), desc: t("decorativeStonesDesc"), image: "/img/8.jpg" },
+    { 
+      key: "zippers",
+      name: t("zippers"), 
+      desc: t("zippersDesc"), 
+      image: "/img/4.jpg",
+      alt: "Zippers"
+    },
+    { 
+      key: "buckles",
+      name: t("buckles"), 
+      desc: t("bucklesDesc"), 
+      image: "/img/5.jpg",
+      alt: "Buckles"
+    },
+    { 
+      key: "snapFasteners",
+      name: t("snapFasteners"), 
+      desc: t("snapFastenersDesc"), 
+      image: "/img/6.jpg",
+      alt: "Snap Fasteners"
+    },
+    { 
+      key: "labels",
+      name: t("labels"), 
+      desc: t("labelsDesc"), 
+      image: "/img/7.jpg",
+      alt: "Labels"
+    },
+    { 
+      key: "decorativeStones",
+      name: t("decorativeStones"), 
+      desc: t("decorativeStonesDesc"), 
+      image: "/img/8.jpg",
+      alt: "Decorative Stones"
+    },
   ];
 
   return (
@@ -81,12 +117,12 @@ export default function ProductsSection() {
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {products.map((product, index) => (
-            <div key={index} className="product-card group cursor-pointer">
+          {products.map((product) => (
+            <div key={product.key} className="product-card group cursor-pointer">
               <div className="relative aspect-square overflow-hidden rounded-xl sm:rounded-2xl mb-3 sm:mb-4 border border-gray-200 bg-white transition-all duration-500 group-hover:border-orange-500 group-hover:shadow-xl">
                 <img
                   src={product.image}
-                  alt={product.name}
+                  alt={product.alt}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
                 />

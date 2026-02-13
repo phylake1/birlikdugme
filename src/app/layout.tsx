@@ -1,53 +1,27 @@
-import "./globals.css"
-import Navbar from "@/components/navbar/Navbar"
-import { LanguageProvider } from "@/contexts/LanguageContext"
-import { Search } from "lucide-react";
+"use client";
 
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Birlik Düğme",
-  description: "Bu site için kısa ve açıklayıcı bir description buraya yazılır.",
-  keywords: ["nextjs", "web tasarım", "react", "seo", "frontend"],
-
-  icons: {
-    icon: [
-      { url: "/img/favicon.png" },
-    ],
-    shortcut: "/img/favicon.png",
-    apple: "/img/favicon.png",
-  },
-
-  openGraph: {
-    title: "Birlik Düğme",
-    description: "Bu site için kısa ve açıklayıcı bir description buraya yazılır.",
-    url: "https://birlikdugme.com",
-    siteName: "Birlik Düğme",
-    images: [
-      {
-        url: "https://siteadresin.com/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Site görseli",
-      },
-    ],
-    locale: "tr_TR",
-    type: "website",
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Site Başlığı | Marka Adı",
-    description: "Bu site için kısa ve açıklayıcı bir description buraya yazılır.",
-    images: ["https://siteadresin.com/og-image.jpg"],
-  },
-};
+import "./globals.css";
+import Navbar from "@/components/navbar/Navbar";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import Loader from "@/components/ui/Loader";
+import { useState, useEffect } from "react";
+import { metadata } from "./metadata";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); // 1.5 saniye loader göster
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <html lang="tr" className="font-(family-name:/)">
       <head>
@@ -55,6 +29,7 @@ export default function RootLayout({
       </head>
       <body>
         <LanguageProvider>
+          {isLoading && <Loader />}
           <Navbar />
           {children}
         </LanguageProvider>

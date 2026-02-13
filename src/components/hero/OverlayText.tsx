@@ -26,25 +26,25 @@ export default function OverlayText({
       title: t("overlayTitle1"),
       description: t("overlayDesc1"),
       position: "bottom" as TextPosition,
-      desktopPosition: "center",
+      desktopPosition: "center" as "left" | "right" | "center",
     },
     {
       title: t("overlayTitle2"),
       description: t("overlayDesc2"),
       position: "top" as TextPosition,
-      desktopPosition: "right",
+      desktopPosition: "right" as "left" | "right" | "center",
     },
     {
       title: t("overlayTitle3"),
       description: t("overlayDesc3"),
       position: "bottom" as TextPosition,
-      desktopPosition: "left",
+      desktopPosition: "left" as "left" | "right" | "center",
     },
     {
       title: t("overlayTitle4"),
       description: t("overlayDesc4"),
       position: "top" as TextPosition,
-      desktopPosition: "right",
+      desktopPosition: "right" as "left" | "right" | "center",
     },
   ];
 
