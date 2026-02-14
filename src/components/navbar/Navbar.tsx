@@ -370,7 +370,7 @@ export default function Navbar() {
 
             {/* Mobile WhatsApp Button */}
             
-             <a href="https://wa.me/905XXXXXXXXX"
+             <a href="https://wa.me/905536952434"
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}

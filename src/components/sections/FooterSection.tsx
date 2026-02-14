@@ -103,6 +103,7 @@ export default function FooterSection() {
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
             <a
               href="https://wa.me/905536952434"
+              target="_blank"
               className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-full font-medium hover:bg-orange-500 transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base"
             >
               {t("ctaButtonQuote")}
