@@ -14,32 +14,54 @@ export default function AboutSection() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    gsap.set(".about-content", { opacity: 0, y: 50 });
-    gsap.set(".about-image", { opacity: 0, scale: 0.95 });
+    // Set initial state immediately
+    const aboutContent = containerRef.current.querySelectorAll(".about-content");
+    const aboutImage = containerRef.current.querySelectorAll(".about-image");
+    const headings = containerRef.current.querySelectorAll("h2, p");
+    
+    gsap.set(aboutContent, { opacity: 0, y: 50 });
+    gsap.set(aboutImage, { opacity: 0, scale: 0.95 });
+    gsap.set(headings, { opacity: 0, y: 30 });
 
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
-        gsap.to(".about-content", {
+        // Animate section title and description
+        gsap.to(headings, {
           opacity: 1,
           y: 0,
           duration: 1.0,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".about-section",
-            start: "top 75%",
+            trigger: containerRef.current,
+            start: "top 85%",
             markers: false,
+            once: true,
           },
         });
 
-        gsap.to(".about-image", {
+        gsap.to(aboutContent, {
+          opacity: 1,
+          y: 0,
+          duration: 1.0,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            markers: false,
+            once: true,
+          },
+        });
+
+        gsap.to(aboutImage, {
           opacity: 1,
           scale: 1,
           duration: 1.2,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".about-section",
+            trigger: containerRef.current,
             start: "top 75%",
             markers: false,
+            once: true,
           },
         });
 
@@ -47,7 +69,7 @@ export default function AboutSection() {
       }, containerRef);
 
       return () => ctx.revert();
-    }, 500);
+    }, 100);
 
     return () => {
       clearTimeout(timer);
@@ -57,7 +79,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="about-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white"
+      className="about-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto">

@@ -15,20 +15,40 @@ export default function ContactSection() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    gsap.set(".contact-item", { opacity: 0, y: 40 });
+    // Set initial state immediately
+    const contactItems = containerRef.current.querySelectorAll(".contact-item");
+    const headings = containerRef.current.querySelectorAll("h2, p");
+    
+    gsap.set(contactItems, { opacity: 0, y: 40 });
+    gsap.set(headings, { opacity: 0, y: 30 });
 
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
-        gsap.to(".contact-item", {
+        // Animate section title and description
+        gsap.to(headings, {
+          opacity: 1,
+          y: 0,
+          duration: 1.0,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 85%",
+            markers: false,
+            once: true,
+          },
+        });
+
+        gsap.to(contactItems, {
           opacity: 1,
           y: 0,
           duration: 1.0,
           ease: "power3.out",
           stagger: 0.15,
           scrollTrigger: {
-            trigger: ".contact-section",
+            trigger: containerRef.current,
             start: "top 75%",
             markers: false,
+            once: true,
           },
         });
 
@@ -36,7 +56,7 @@ export default function ContactSection() {
       }, containerRef);
 
       return () => ctx.revert();
-    }, 500);
+    }, 100);
 
     return () => {
       clearTimeout(timer);
@@ -46,7 +66,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="contact-section py-5 sm:py-24 lg:pt-20 px-4 sm:px-6 lg:px-8 bg-white"
+      className="contact-section py-5 sm:py-24 lg:pt-20 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
       ref={containerRef}
     >
       <div className="max-w-4xl mx-auto">

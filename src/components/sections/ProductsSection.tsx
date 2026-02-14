@@ -14,20 +14,40 @@ export default function ProductsSection() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    gsap.set(".product-card", { opacity: 0, y: 60 });
+    // Set initial state immediately
+    const productCards = containerRef.current.querySelectorAll(".product-card");
+    const headings = containerRef.current.querySelectorAll("h2, p");
+    
+    gsap.set(productCards, { opacity: 0, y: 60 });
+    gsap.set(headings, { opacity: 0, y: 30 });
 
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
-        gsap.to(".product-card", {
+        // Animate section title and description
+        gsap.to(headings, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 85%",
+            markers: false,
+            once: true,
+          },
+        });
+
+        gsap.to(productCards, {
           opacity: 1,
           y: 0,
           duration: 1.0,
           ease: "power3.out",
           stagger: 0.1,
           scrollTrigger: {
-            trigger: ".products-section",
+            trigger: containerRef.current,
             start: "top 80%",
             markers: false,
+            once: true,
           },
         });
 
@@ -35,7 +55,7 @@ export default function ProductsSection() {
       }, containerRef);
 
       return () => ctx.revert();
-    }, 500);
+    }, 100);
 
     return () => {
       clearTimeout(timer);
@@ -104,7 +124,7 @@ export default function ProductsSection() {
   return (
     <section
       id="products"
-      className="products-section sm:py-24 lg:py-15 px-4 sm:px-6 lg:px-8 bg-white"
+      className="products-section sm:py-24 lg:py-15 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto">

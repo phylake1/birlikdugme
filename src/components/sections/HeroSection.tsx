@@ -14,10 +14,11 @@ export default function HeroSection() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    gsap.set(".category-pill", { opacity: 0, scale: 0 });
+    gsap.set(".category-pill", { opacity: 0, scale: 0.8, y: 30 });
 
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
+        // Hero animasyonları
         gsap.from(".hero-title", {
           opacity: 0,
           y: 80,
@@ -39,17 +40,40 @@ export default function HeroSection() {
           ease: "power3.out",
         });
 
-        gsap.to(".category-pill", {
-          opacity: 1,
-          scale: 1,
-          duration: 0.85,
-          ease: "back.out(1.7)",
-          stagger: { amount: 1.2, from: "random" },
+        // Kategori başlığı animasyonu
+        gsap.from(".categories-title", {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
           scrollTrigger: {
             trigger: ".categories-container",
-            start: "top 85%",
+            start: "top 90%",
             markers: false,
           },
+        });
+
+        // Her satır için ayrı ScrollTrigger
+        const rows = gsap.utils.toArray(".category-row");
+        rows.forEach((row: any, index) => {
+          const pills = row.querySelectorAll(".category-pill");
+          
+          gsap.to(pills, {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "back.out(1.4)",
+            stagger: {
+              amount: 0.4,
+              from: "start",
+            },
+            scrollTrigger: {
+              trigger: row,
+              start: "top 85%",
+              toggleActions: "play none none none",
+              markers: false,
+            },
+          });
         });
 
         setTimeout(() => ScrollTrigger.refresh(), 100);
@@ -72,7 +96,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-gray-50 to-white">
+    <section ref={containerRef} className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto w-full">
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <h1 className="hero-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-4 sm:mb-6 tracking-tight text-black px-4">
@@ -85,14 +109,14 @@ export default function HeroSection() {
             </span>
           </p>
           <div className="hero-cta flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 px-4">
-            <a
-              href="#products"
+            
+             <a href="#products"
               className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-full font-medium hover:bg-orange-500 transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base"
             >
               {t("heroButtonProducts")}
             </a>
-            <a
-              href="#contact"
+            
+             <a href="#contact"
               className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-gray-300 text-black rounded-full font-medium hover:border-orange-500 transition-all duration-300 text-sm sm:text-base hover:text-orange-500 duration-300"
             >
               {t("heroButtonContact")}
@@ -101,14 +125,14 @@ export default function HeroSection() {
         </div>
 
         <div className="categories-container max-w-6xl mx-auto px-4 pt-10">
-          <p className="text-center text-xs sm:text-sm text-gray-500 mb-6 sm:mb-10 uppercase tracking-wider font-light">
+          <p className="categories-title text-center text-xs sm:text-sm text-gray-500 mb-6 sm:mb-10 uppercase tracking-wider font-light">
             {t("categoriesTitle")}
           </p>
           <div className="space-y-3 sm:space-y-4 lg:space-y-6">
             {categoryRows.map((row, rowIndex) => (
               <div
                 key={rowIndex}
-                className={`flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 ${rowIndex % 2 === 0 ? "md:pr-8 lg:pr-12" : "md:pl-8 lg:pl-12"}`}
+                className={`category-row flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 ${rowIndex % 2 === 0 ? "md:pr-8 lg:pr-12" : "md:pl-8 lg:pl-12"}`}
               >
                 {row.map((category, categoryIndex) => (
                   <div key={categoryIndex} className="category-pill">
