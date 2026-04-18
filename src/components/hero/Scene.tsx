@@ -15,8 +15,9 @@ type Props = {
 const rotations = [
   { x: 0, y: 0, z: 0 },
   { x: 0, y: Math.PI / 2, z: 0 },
-  { x: -Math.PI / 2, y: 0, z: 0 },
   { x: -Math.PI / 4, y: Math.PI / 4, z: 0 },
+  
+  { x: Math.PI / 2, y: 0, z: 0 },
 ]
 
 export default function Scene({ step, progress, isMobile = false }: Props) {
@@ -55,7 +56,7 @@ export default function Scene({ step, progress, isMobile = false }: Props) {
     }
 
     // Scale değerleri artırıldı
-    const baseScale = isMobile ? 1.0 : 1.2  // Mobil: 0.7 → 1.0, Desktop: 1.0 → 1.2
+    const baseScale = isMobile ? 1.4 : 1.2  // Mobil: 0.7 → 1.0, Desktop: 1.0 → 1.2
     const scaleEffect = isMobile ? 0.03 : 0.05
     const targetScale = baseScale + Math.sin(progress * Math.PI * 2) * scaleEffect
     scaleRef.current = THREE.MathUtils.lerp(scaleRef.current, targetScale, 0.1)
