@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function Model({ scale = 1 }: Props) {
-  const { scene } = useGLTF("/models/button2.glb") // Model path'ini kontrol et
+  const { scene } = useGLTF("/models/123.glb") // Model path'ini kontrol et
   
   useEffect(() => {
     if (scene) {
@@ -27,4 +27,4 @@ export default function Model({ scale = 1 }: Props) {
   )
 }
 
-useGLTF.preload("/models/button2.glb")
+useGLTF.preload("/models/123.glb")
