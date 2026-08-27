@@ -5,7 +5,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { language, toggleLanguage, t } = useLanguage();
+  const [scrolled, setScrolled] = useState(false);
+  const { language, toggleLanguage } = useLanguage();
 
   const menuItems = {
     TR: {
@@ -26,110 +27,88 @@ export default function Navbar() {
     },
   };
 
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const navLinks = [
+    { href: "#", label: menuItems[language].home },
+    { href: "#products", label: menuItems[language].products },
+    { href: "#branches", label: menuItems[language].franchise },
+    { href: "#about", label: menuItems[language].about },
+    { href: "#contact", label: menuItems[language].contact },
+  ];
 
-  const closeMenu = () => {
-    setIsOpen(false);
-  };
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const closeMenu = () => setIsOpen(false);
 
+  // Scroll durumunu takip et. requestAnimationFrame ile throttle edilmiş
+  // ve state sadece eşik (20px) geçildiğinde değişiyor. Eski navbar'da
+  // scroll event'inde doğrudan DOM'a (document.querySelector + classList)
+  // dokunuluyordu; bu React'ın render döngüsü dışında olduğu için
+  // navbar'ın "yanıp sönmesi" gibi görünen kararlı olmayan bir davranışa
+  // sebep oluyordu. Burada tek bir React state ile, threshold geçilmeden
+  // gereksiz render tetiklenmiyor.
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const nav = document.querySelector("nav");
-      if (nav) {
-        if (window.scrollY > 50) {
-          nav.classList.add("shadow-md");
-        } else {
-          nav.classList.remove("shadow-md");
-        }
-      }
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 20);
+        ticking = false;
+      });
     };
-
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Menü açıkken arka planın kaymasını engelle
+  // Mobil menü açıkken arka planın kaymasını engelle
   useEffect(() => {
-    if (isOpen) {
-      const previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = previousOverflow;
-      };
-    }
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
   }, [isOpen]);
 
   return (
     <>
       {/*
-        Not: "transform-gpu" navbar'ı sabit bir GPU katmanına alıyor.
-        Mobil menü panelinin açılıp kapanması (transform ile) bu navbar'ın
-        backdrop-blur'unu yeniden compositing etmesine sebep oluyordu ve bu
-        bazı mobil taraycılarda (özellikle Safari) kısa bir "beyaz flaş"
-        olarak görünüyordu. Navbar'ı kendi sabit katmanına almak bu yeniden
-        compositing'i engelliyor.
+        Navbar artık sade bir bg-white kullanıyor; backdrop-blur ve
+        gradient kombinasyonu kaldırıldı. Scroll'da gölge sadece
+        "shadow" class'ının CSS transition'ıyla değişiyor, ayrı bir
+        compositing katmanı gerektirmiyor.
       */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-l from-white/90 via-white/80 to-white/70 backdrop-blur-xl shadow-sm transform-gpu">
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 bg-white transition-shadow duration-300 ${
+          scrolled ? "shadow-md" : "shadow-none"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <a href="#" className="flex items-center">
-                <img
-                  src="/img/birlikdugme_b.png"
-                  alt="Birlik Düğme"
-                  className="h-10 w-auto"
-                />
-              </a>
-            </div>
+            <a href="#" className="flex-shrink-0 flex items-center">
+              <img
+                src="/img/birlikdugme_b.png"
+                alt="Birlik Düğme"
+                className="h-10 w-auto"
+              />
+            </a>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-1">
-              
-               <a href="#"
-                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
-              >
-                {menuItems[language].home}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-              </a>
-
-              
-              <a  href="#products"
-                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
-              >
-                {menuItems[language].products}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-              </a>
-
-              <a  href="#branches"
-                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
-              >
-                {menuItems[language].franchise}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-              </a>
-
-              
-               <a href="#about"
-                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
-              >
-                {menuItems[language].about}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-              </a>
-
-              
-               <a href="#contact"
-                className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
-              >
-                {menuItems[language].contact}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-              </a>
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="relative text-black hover:text-gray-600 px-4 py-2 text-[15px] font-medium transition-all group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              ))}
             </div>
 
             {/* Right Section - Language, WhatsApp */}
             <div className="hidden lg:flex items-center space-x-3">
-              {/* Language Toggle */}
               <button
                 onClick={toggleLanguage}
                 className="flex items-center space-x-1.5 px-3 py-2 text-black hover:text-gray-600 hover:bg-gray-100/50 rounded-full transition-all font-medium text-sm border border-gray-200"
@@ -151,9 +130,8 @@ export default function Navbar() {
                 <span>{language}</span>
               </button>
 
-              {/* WhatsApp Button */}
-              
-               <a href="https://wa.me/905XXXXXXXXX"
+              <a
+                href="https://wa.me/905XXXXXXXXX"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 bg-[#25D366] text-white px-5 py-2.5 text-[15px] font-medium rounded-full hover:bg-[#20BA5A] transition-all shadow-sm hover:shadow-md hover:scale-105"
@@ -172,12 +150,11 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center space-x-2">
-              {/* Hamburger */}
               <button
                 onClick={toggleMenu}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu-panel"
-                className="relative z-[70] inline-flex items-center justify-center p-2 rounded-full text-black hover:text-gray-600 hover:bg-gray-100/50 focus:outline-none transition-colors"
+                className="relative inline-flex items-center justify-center p-2 rounded-full text-black hover:text-gray-600 hover:bg-gray-100/50 focus:outline-none transition-colors"
               >
                 <span className="sr-only">Menü</span>
                 {!isOpen ? (
@@ -218,108 +195,34 @@ export default function Navbar() {
       </nav>
 
       {/*
-        Mobil Tam Ekran Menü - sıfırdan yazıldı.
-        - Panel yukarıdan aşağı doğru kayarak açılıyor (transform: translateY),
-          eskisi gibi soldan/sağdan değil.
-        - Panel her zaman tam opak (bg-white); opacity/visibility geçişi YOK,
-          sadece transform değişiyor. Bu, blur'lu navbar'ın flaş vermesine
-          sebep olan opacity-tabanlı reveal'ı tamamen ortadan kaldırıyor.
-        - "transform-gpu" panel için de sabit bir compositing katmanı
-          oluşturuyor.
+        Mobil menü - navbar'ın kendisiyle aynı katmanı/efekti paylaşmıyor:
+        navbar'ın hemen altında (top-16) konumlanıyor ve sadece isOpen
+        true iken DOM'a ekleniyor (conditional render). Backdrop-blur veya
+        transform tabanlı bir reveal yok, bu yüzden navbar ile aralarında
+        compositing çakışması ve önceki sürümlerde yaşanan beyaz
+        flaş/yanıp sönme ihtimali yok.
       */}
-      <div
-        id="mobile-menu-panel"
-        aria-hidden={!isOpen}
-        className={`lg:hidden fixed inset-0 bg-white z-[60] transform-gpu transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-y-0" : "-translate-y-full pointer-events-none"
-        }`}
-      >
-        {/* Menu Content */}
-        <div className="h-full flex flex-col">
-          {/* Top Bar with Logo and Close */}
-          <div className="flex justify-between items-center h-16 px-6 border-b border-gray-100">
-            <img
-              src="/img/birlikdugme_b.png"
-              alt="Birlik Düğme"
-              className="h-10 w-auto"
-            />
-            <button
-              onClick={closeMenu}
-              className="p-2 rounded-full text-black hover:bg-gray-100 transition-colors"
-            >
-              <svg
-                className="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Menu Items Container */}
-          <div className="flex-1 flex flex-col justify-between px-6 py-8 overflow-y-auto">
-            {/* Menu Links */}
+      {isOpen && (
+        <div
+          id="mobile-menu-panel"
+          className="lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-white overflow-y-auto"
+        >
+          <div className="flex flex-col px-6 py-8">
             <div className="space-y-1">
-              {[
-                {
-                  href: "#",
-                  label: menuItems[language].home,
-                  delay: 100,
-                },
-                {
-                  href: "#products",
-                  label: menuItems[language].products,
-                  delay: 150,
-                },
-                {
-                  href: "#branches",
-                  label: menuItems[language].franchise,
-                  delay: 200,
-                },
-                {
-                  href: "#about",
-                  label: menuItems[language].about,
-                  delay: 250,
-                },
-                {
-                  href: "#contact",
-                  label: menuItems[language].contact,
-                  delay: 300,
-                },
-              ].map((item, index) => (
-                 <a key={item.href}
-                  href={item.href}
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
                   onClick={closeMenu}
-                  className={`block text-black hover:text-gray-600 px-4 py-3 text-xl font-light transition-all duration-300 ${
-                    isOpen ? "animate-fadeIn" : ""
-                  }`}
-                  style={{
-                    animationDelay: `${item.delay}ms`,
-                    opacity: isOpen ? 1 : 0,
-                  }}
+                  className="block text-black hover:text-gray-600 px-4 py-3 text-xl font-light transition-colors"
                 >
-                  {item.label}
+                  {link.label}
                 </a>
               ))}
 
-              {/* Mobile Language Toggle */}
               <button
                 onClick={toggleLanguage}
-                className={`w-full flex items-center justify-between px-4 py-3 text-black hover:bg-gray-50 rounded-lg transition-all font-light text-lg mt-4 ${
-                  isOpen ? "animate-fadeIn" : ""
-                }`}
-                style={{
-                  animationDelay: "300ms",
-                  opacity: isOpen ? 1 : 0,
-                }}
+                className="w-full flex items-center justify-between px-4 py-3 text-black hover:bg-gray-50 rounded-lg transition-all font-light text-lg mt-4"
               >
                 <span className="flex items-center space-x-2">
                   <svg
@@ -344,19 +247,12 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Mobile WhatsApp Button */}
-            
-             <a href="https://wa.me/905536952434"
+            <a
+              href="https://wa.me/905536952434"
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className={`flex items-center justify-center space-x-2 bg-[#25D366] text-white hover:bg-[#20BA5A] px-6 py-4 rounded-full text-base font-medium transition-all shadow-lg hover:shadow-xl ${
-                isOpen ? "animate-fadeIn" : ""
-              }`}
-              style={{
-                animationDelay: "350ms",
-                opacity: isOpen ? 1 : 0,
-              }}
+              className="mt-8 flex items-center justify-center space-x-2 bg-[#25D366] text-white hover:bg-[#20BA5A] px-6 py-4 rounded-full text-base font-medium transition-all shadow-lg hover:shadow-xl"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -370,7 +266,7 @@ export default function Navbar() {
             </a>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

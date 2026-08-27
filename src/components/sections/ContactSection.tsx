@@ -1,73 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import { Phone, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function ContactSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    // Set initial state immediately
-    const contactItems = containerRef.current.querySelectorAll(".contact-item");
-    const headings = containerRef.current.querySelectorAll("h2, p");
-    
-    gsap.set(contactItems, { opacity: 0, y: 40 });
-    gsap.set(headings, { opacity: 0, y: 30 });
-
-    const timer = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        // Animate section title and description
-        gsap.to(headings, {
-          opacity: 1,
-          y: 0,
-          duration: 1.0,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 85%",
-            markers: false,
-            once: true,
-          },
-        });
-
-        gsap.to(contactItems, {
-          opacity: 1,
-          y: 0,
-          duration: 1.0,
-          ease: "power3.out",
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 75%",
-            markers: false,
-            once: true,
-          },
-        });
-
-        setTimeout(() => ScrollTrigger.refresh(), 100);
-      }, containerRef);
-
-      return () => ctx.revert();
-    }, 100);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
 
   return (
     <section
       id="contact"
-      className="contact-section relative overflow-hidden py-5 sm:py-24 lg:pt-20 px-4 sm:px-6 lg:px-8 bg-gray-100 pt-20 sm:pt-20 lg:pt-20"
-      ref={containerRef}
+      className="contact-section relative overflow-hidden py-5 sm:py-24 lg:pt-20 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-72 sm:w-96 h-72 sm:h-96 bg-orange-100/20 rounded-full blur-3xl" />
@@ -85,7 +27,7 @@ export default function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-10 sm:mb-12">
-          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
+          <div className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>
@@ -94,7 +36,7 @@ export default function ContactSection() {
             </p>
           </div>
 
-          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
+          <div className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>
@@ -103,7 +45,7 @@ export default function ContactSection() {
             </p>
           </div>
 
-          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300 sm:col-span-2">
+          <div className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300 sm:col-span-2">
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>
@@ -113,7 +55,7 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <div className="contact-item flex items-center justify-center">
+        <div className="flex items-center justify-center">
           <a
             href="https://wa.me/905536952434"
             target="_blank"

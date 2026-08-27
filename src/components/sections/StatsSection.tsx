@@ -69,7 +69,7 @@ export default function StatsSection() {
   }, []);
 
   return (
-    <section className="stats-section relative overflow-hidden py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gray-100" ref={containerRef}>
+    <section className="stats-section relative overflow-hidden py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gray-100" ref={containerRef}>
       <div className="max-w-7xl mx-auto relative">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
           {stats.map((stat, index) => (
