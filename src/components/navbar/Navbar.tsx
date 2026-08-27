@@ -151,8 +151,29 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button + Language Toggle */}
             <div className="lg:hidden flex items-center space-x-2">
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center space-x-1 px-2.5 py-1.5 text-black hover:text-gray-600 hover:bg-gray-100/50 rounded-full transition-all font-medium text-xs border border-gray-200"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+                  />
+                </svg>
+                <span>{language}</span>
+              </button>
+
               <button
                 onClick={toggleMenu}
                 aria-expanded={isOpen}
@@ -227,32 +248,6 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-
-            <button
-              onClick={toggleLanguage}
-              className="w-full flex items-center justify-between px-4 py-3 text-black hover:bg-gray-50 rounded-lg transition-all font-light text-lg mt-4"
-            >
-              <span className="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
-                  />
-                </svg>
-                <span>Language</span>
-              </span>
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-sm font-medium">
-                {language}
-              </span>
-            </button>
           </div>
 
           <a
