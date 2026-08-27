@@ -2,13 +2,13 @@
 "use client"
 
 import { useFrame } from "@react-three/fiber"
-import { useRef } from "react"
+import { useRef, type RefObject } from "react"
 import * as THREE from "three"
 import Model from "./Model"
 
 type Props = {
   step: number
-  progress: number
+  progressRef: RefObject<number>
   isMobile?: boolean
 }
 
@@ -20,7 +20,7 @@ const rotations = [
   { x: Math.PI / 2, y: 0, z: 0 },
 ]
 
-export default function Scene({ step, progress, isMobile = false }: Props) {
+export default function Scene({ step, progressRef, isMobile = false }: Props) {
   const baseRotationRef = useRef(new THREE.Euler(0, 0, 0))
   const scaleRef = useRef(1.0)
   const rotationGroupRef = useRef<THREE.Group>(null)
@@ -56,6 +56,7 @@ export default function Scene({ step, progress, isMobile = false }: Props) {
     }
 
     // Scale değerleri artırıldı
+    const progress = progressRef.current
     const baseScale = isMobile ? 1.4 : 1.2  // Mobil: 0.7 → 1.0, Desktop: 1.0 → 1.2
     const scaleEffect = isMobile ? 0.03 : 0.05
     const targetScale = baseScale + Math.sin(progress * Math.PI * 2) * scaleEffect

@@ -13,9 +13,9 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function Hero3D() {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const progressRef = useRef(0)
   const [step, setStep] = useState(0)
-  const [progress, setProgress] = useState(0)
-  const [isMobile, setIsMobile] = useState<boolean | null>(null) // null ile başlat
+  const [isMobile, setIsMobile] = useState<boolean | null>(null) // null ile başla
   const [mounted, setMounted] = useState(false)
 
   // Component mount kontrolü
@@ -47,9 +47,13 @@ export default function Hero3D() {
       pin: true,
       anticipatePin: 1,
       onUpdate: (self) => {
-        const currentProgress = self.progress
-        setProgress(currentProgress)
+        // Sürekli değişen progress değerini React state yerine ref'te
+        // tutuyoruz. Böylece her scroll tick'inde (saniyede onlarca kez)
+        // tüm bileşen ağacı yeniden render olmuyor — scroll sırasındaki
+        // kasmanın asıl sebeplerinden biri buydu.
+        progressRef.current = self.progress
 
+        const currentProgress = self.progress
         if (currentProgress < 0.25) setStep(0)
         else if (currentProgress < 0.5) setStep(1)
         else if (currentProgress < 0.75) setStep(2)
@@ -83,7 +87,7 @@ export default function Hero3D() {
             position: isMobile ? [0, 0, 7] : [0, 0, 6], 
             fov: isMobile ? 55 : 45 
           }}
-          dpr={[1, 2]}
+          dpr={isMobile ? 1 : [1, 2]}
           performance={{ min: 0.5 }}
         >
           <ambientLight intensity={isMobile ? 0.7 : 0.5} />
@@ -95,13 +99,13 @@ export default function Hero3D() {
             position={[-5, -5, -5]} 
             intensity={isMobile ? 0.6 : 0.5} 
           />
-          <Scene step={step} progress={progress} isMobile={isMobile} />
+          <Scene step={step} progressRef={progressRef} isMobile={isMobile} />
           <Environment preset="studio" />
         </Canvas>
       </div>
 
       {/* Text Overlay Layer */}
-      <OverlayText step={step} progress={progress} isMobile={isMobile} />
+      <OverlayText step={step} isMobile={isMobile} />
     </section>
   )
 }

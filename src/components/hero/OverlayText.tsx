@@ -6,7 +6,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 type Props = {
   step: number;
-  progress: number;
   isMobile?: boolean;
 };
 
@@ -14,7 +13,6 @@ type TextPosition = "top" | "bottom" | "center";
 
 export default function OverlayText({
   step,
-  progress,
   isMobile = false,
 }: Props) {
   const [opacity, setOpacity] = useState(1);
