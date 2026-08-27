@@ -129,7 +129,7 @@ export default function ProductsSection() {
   return (
     <section
       id="products"
-      className="products-section relative overflow-hidden sm:py-24 lg:py-15 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
+      className="products-section relative overflow-hidden pb-16 sm:pb-24 lg:pb-20 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
       ref={containerRef}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
