@@ -52,7 +52,9 @@ export default function HeroSection() {
           },
         });
 
-        // Her satır için ayrı ScrollTrigger
+        // Her satır için ayrı ScrollTrigger (mobildeki tek akışkan satır
+        // ve desktop'taki zigzag satırların hepsi ".category-row" class'ını
+        // taşıdığı için aynı seçiciyle otomatik yakalanıyor)
         const rows = gsap.utils.toArray(".category-row");
         rows.forEach((row: any, index) => {
           const pills = row.querySelectorAll(".category-pill");
@@ -95,6 +97,12 @@ export default function HeroSection() {
     [t("hanger"), t("birdEye"), t("print")],
   ];
 
+  // Mobilde satırları ayrı blok olarak zorlamak yerine tüm kategorileri
+  // tek bir akışkan flex-wrap içine alıyoruz; böylece bir önceki "satır"
+  // dolduktan sonra artan tek bir baloncuk (ör. "Broş", "Grogren", "Arma")
+  // kendi başına, boş alanın ortasında kalmıyor.
+  const allCategories = categoryRows.flat();
+
   return (
     <section ref={containerRef} className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto w-full">
@@ -128,15 +136,28 @@ export default function HeroSection() {
           <p className="categories-title text-center text-xs sm:text-sm text-gray-500 mb-6 sm:mb-10 uppercase tracking-wider font-light">
             {t("categoriesTitle")}
           </p>
-          <div className="space-y-3 sm:space-y-4 lg:space-y-6">
+
+          {/* Mobil (md altı): tüm kategoriler tek bir akışkan satırda */}
+          <div className="category-row flex md:hidden flex-wrap justify-center gap-2 sm:gap-3">
+            {allCategories.map((category, index) => (
+              <div key={index} className="category-pill">
+                <div className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-black text-white border border-gray-200 hover:border-orange-500 hover:bg-orange-500 duration-300 hover:shadow-lg transition-all duration-300 cursor-pointer font-light whitespace-nowrap text-xs sm:text-sm">
+                  {category}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Tablet/Desktop (md ve üstü): mevcut zigzag satır düzeni korunuyor */}
+          <div className="hidden md:block space-y-4 lg:space-y-6">
             {categoryRows.map((row, rowIndex) => (
               <div
                 key={rowIndex}
-                className={`category-row flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 ${rowIndex % 2 === 0 ? "md:pr-8 lg:pr-12" : "md:pl-8 lg:pl-12"}`}
+                className={`category-row flex flex-wrap justify-center gap-3 lg:gap-4 ${rowIndex % 2 === 0 ? "md:pr-8 lg:pr-12" : "md:pl-8 lg:pl-12"}`}
               >
                 {row.map((category, categoryIndex) => (
                   <div key={categoryIndex} className="category-pill">
-                    <div className="px-4 sm:px-5 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-full bg-black text-white border border-gray-200 hover:border-orange-500 hover:bg-orange-500 duration-300 hover:shadow-lg transition-all duration-300 cursor-pointer font-light whitespace-nowrap text-xs sm:text-sm lg:text-base">
+                    <div className="px-5 lg:px-6 py-2.5 lg:py-3 rounded-full bg-black text-white border border-gray-200 hover:border-orange-500 hover:bg-orange-500 duration-300 hover:shadow-lg transition-all duration-300 cursor-pointer font-light whitespace-nowrap text-sm lg:text-base">
                       {category}
                     </div>
                   </div>
