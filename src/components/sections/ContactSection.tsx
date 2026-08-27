@@ -27,32 +27,41 @@ export default function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-10 sm:mb-12">
-          <div className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
+          <a
+            href="tel:+905536952434"
+            className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300"
+          >
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>
             <p className="text-base sm:text-lg text-black font-light">
               +90 553 695 24 34
             </p>
-          </div>
+          </a>
 
-          <div className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
+          <a
+            href="tel:+905323018800"
+            className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300"
+          >
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>
             <p className="text-base sm:text-lg text-black font-light">
               +90 532 301 88 00
             </p>
-          </div>
+          </a>
 
-          <div className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300 sm:col-span-2">
+          <a
+            href="mailto:info@birlikdugme.com"
+            className="group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300 sm:col-span-2"
+          >
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>
             <p className="text-base sm:text-lg text-black font-light">
               info@birlikdugme.com
             </p>
-          </div>
+          </a>
         </div>
 
         <div className="flex items-center justify-center">

@@ -15,7 +15,7 @@ export default function Hero3D() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef(0)
   const [step, setStep] = useState(0)
-  const [isMobile, setIsMobile] = useState<boolean | null>(null) // null ile başla
+  const [isMobile, setIsMobile] = useState<boolean | null>(null) // null ile başlat
   const [mounted, setMounted] = useState(false)
 
   // Component mount kontrolü
@@ -87,7 +87,7 @@ export default function Hero3D() {
             position: isMobile ? [0, 0, 7] : [0, 0, 6], 
             fov: isMobile ? 55 : 45 
           }}
-          dpr={isMobile ? 1 : [1, 2]}
+          dpr={isMobile ? [1, 1.5] : [1, 2]}
           performance={{ min: 0.5 }}
         >
           <ambientLight intensity={isMobile ? 0.7 : 0.5} />
