@@ -20,7 +20,7 @@ export default function ProductsSection() {
     // Set initial state immediately
     const productCards = containerRef.current.querySelectorAll(".product-card");
     const headings = containerRef.current.querySelectorAll("h2, p");
-    
+
     gsap.set(productCards, { opacity: 0, y: 60 });
     gsap.set(headings, { opacity: 0, y: 30 });
 
@@ -87,38 +87,38 @@ export default function ProductsSection() {
       image: "/img/3.jpg",
       alt: "Metal Accessories",
     },
-    { 
+    {
       key: "zippers",
-      name: t("zippers"), 
-      desc: t("zippersDesc"), 
+      name: t("zippers"),
+      desc: t("zippersDesc"),
       image: "/img/4.jpg",
       alt: "Zippers"
     },
-    { 
+    {
       key: "buckles",
-      name: t("buckles"), 
-      desc: t("bucklesDesc"), 
+      name: t("buckles"),
+      desc: t("bucklesDesc"),
       image: "/img/5.jpg",
       alt: "Buckles"
     },
-    { 
+    {
       key: "snapFasteners",
-      name: t("snapFasteners"), 
-      desc: t("snapFastenersDesc"), 
+      name: t("snapFasteners"),
+      desc: t("snapFastenersDesc"),
       image: "/img/6.jpg",
       alt: "Snap Fasteners"
     },
-    { 
+    {
       key: "labels",
-      name: t("labels"), 
-      desc: t("labelsDesc"), 
+      name: t("labels"),
+      desc: t("labelsDesc"),
       image: "/img/7.jpg",
       alt: "Labels"
     },
-    { 
+    {
       key: "decorativeStones",
-      name: t("decorativeStones"), 
-      desc: t("decorativeStonesDesc"), 
+      name: t("decorativeStones"),
+      desc: t("decorativeStonesDesc"),
       image: "/img/8.jpg",
       alt: "Decorative Stones"
     },
@@ -129,7 +129,7 @@ export default function ProductsSection() {
   return (
     <section
       id="products"
-      className="products-section relative overflow-hidden pb-16 sm:pb-24 lg:pb-20 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
+      className="products-section relative overflow-hidden pb-16 sm:pb-24 lg:pb-20 px-4 sm:px-6 lg:px-8 bg-white pt-8 sm:pt-10 lg:pt-12"
       ref={containerRef}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

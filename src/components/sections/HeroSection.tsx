@@ -70,7 +70,7 @@ export default function HeroSection() {
   const allCategories = categoryRows.flat();
 
   return (
-    <section ref={containerRef} className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16 bg-gradient-to-b from-gray-50 to-white">
+    <section ref={containerRef} className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-14 sm:pt-20 lg:pt-24 pb-6 sm:pb-10 lg:pb-12 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto w-full">
         <div className="categories-container max-w-6xl mx-auto px-4">
           {/* Mobil (md altı): tüm kategoriler tek bir akışkan satırda */}
