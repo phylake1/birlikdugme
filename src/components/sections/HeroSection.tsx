@@ -96,7 +96,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section ref={containerRef} className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-gray-50 to-white">
+    <section ref={containerRef} className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-gray-100">
       <div className="max-w-7xl mx-auto w-full">
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <h1 className="hero-title text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight text-black px-4">
@@ -145,10 +145,6 @@ export default function HeroSection() {
             ))}
           </div>
         </div>
-      </div>
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 sm:top-20 right-5 sm:right-10 w-48 sm:w-72 h-48 sm:h-72 bg-orange-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 sm:bottom-20 left-5 sm:left-10 w-64 sm:w-96 h-64 sm:h-96 bg-gray-100/50 rounded-full blur-3xl" />
       </div>
     </section>
   );

@@ -66,7 +66,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="contact-section relative overflow-hidden py-5 sm:py-24 lg:pt-20 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
+      className="contact-section relative overflow-hidden py-5 sm:py-24 lg:pt-20 px-4 sm:px-6 lg:px-8 bg-gray-100 pt-20 sm:pt-20 lg:pt-20"
       ref={containerRef}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -85,7 +85,7 @@ export default function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-10 sm:mb-12">
-          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-100 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
+          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>
@@ -94,7 +94,7 @@ export default function ContactSection() {
             </p>
           </div>
 
-          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-100 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
+          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>
@@ -103,7 +103,7 @@ export default function ContactSection() {
             </p>
           </div>
 
-          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-100 hover:border-orange-500 hover:shadow-lg transition-all duration-300 sm:col-span-2">
+          <div className="contact-item group flex items-center gap-4 p-5 sm:p-6 rounded-2xl border border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300 sm:col-span-2">
             <span className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
               <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
             </span>

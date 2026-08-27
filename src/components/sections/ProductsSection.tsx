@@ -133,7 +133,6 @@ export default function ProductsSection() {
       ref={containerRef}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-10 -left-16 w-56 sm:w-80 h-56 sm:h-80 bg-orange-100/30 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-gray-100/50 rounded-full blur-3xl" />
       </div>
 
