@@ -99,10 +99,10 @@ export default function HeroSection() {
     <section ref={containerRef} className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto w-full">
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <h1 className="hero-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-4 sm:mb-6 tracking-tight text-black px-4">
+          <h1 className="hero-title text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight text-black px-4">
             {t("heroTitle")}
           </h1>
-          <p className="hero-subtitle text-base sm:text-xl md:text-2xl lg:text-3xl text-gray-600 max-w-3xl mx-auto mb-2 sm:mb-12 leading-relaxed px-4">
+          <p className="hero-subtitle text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto mb-2 sm:mb-12 leading-relaxed px-4">
             {t("heroSubtitle")}
             <span className="block mt-2 text-black font-semibold">
               {t("heroSubtitleHighlight")}

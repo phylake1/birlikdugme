@@ -90,9 +90,12 @@ export default function FooterSection() {
         </div>
       </section>
 
-      <section className="cta-section relative py-20 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
-        <div className="cta-content max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-black mb-4 sm:mb-6 leading-tight">
+      <section className="cta-section relative overflow-hidden py-20 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[26rem] h-[26rem] bg-orange-100/20 rounded-full blur-3xl" />
+        </div>
+        <div className="cta-content relative max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-4 sm:mb-6 leading-tight">
             {t("ctaTitle")}
             <span className="block mt-2 font-normal">{t("ctaTitleHighlight")}</span>
           </h2>
