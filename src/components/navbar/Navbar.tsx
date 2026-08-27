@@ -72,13 +72,16 @@ export default function Navbar() {
   return (
     <>
       {/*
-        Navbar artık sade bir bg-white kullanıyor; backdrop-blur ve
-        gradient kombinasyonu kaldırıldı. Scroll'da gölge sadece
-        "shadow" class'ının CSS transition'ıyla değişiyor, ayrı bir
-        compositing katmanı gerektirmiyor.
+        Navbar hafif saydam + backdrop-blur ile buzlu cam (glassmorphism)
+        görünümünde. Daha önceki "beyaz flaş" sorunu blur'dan değil, scroll
+        event'inde doğrudan DOM manipülasyonundan ve mobil menünün navbar
+        ile aynı katmanı paylaşmasından kaynaklanıyordu; ikisi de kalıcı
+        olarak çözüldü (scroll artık tek bir React state, mobil menü de
+        navbar'ın altında ayrı bir eleman), bu yüzden blur'u geri
+        eklemek güvenli.
       */}
       <nav
-        className={`fixed top-0 left-0 w-full z-50 bg-white transition-shadow duration-300 ${
+        className={`fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md transition-shadow duration-300 ${
           scrolled ? "shadow-md" : "shadow-none"
         }`}
       >
