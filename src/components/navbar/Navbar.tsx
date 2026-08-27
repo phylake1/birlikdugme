@@ -5,8 +5,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isSearchClosing, setIsSearchClosing] = useState(false);
   const { language, toggleLanguage, t } = useLanguage();
 
   const menuItems = {
@@ -16,7 +14,6 @@ export default function Navbar() {
       franchise: "Şubeler",
       about: "Hakkımızda",
       contact: "İletişim",
-      search: "Ürün veya kategori ara...",
       whatsapp: "WhatsApp",
     },
     EN: {
@@ -25,26 +22,16 @@ export default function Navbar() {
       franchise: "Branches",
       about: "About Us",
       contact: "Contact",
-      search: "Search product or category...",
       whatsapp: "WhatsApp",
     },
   };
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const closeMenu = () => {
     setIsOpen(false);
-    setIsSearchClosing(false);
-  };
-
-  const closeSearch = () => {
-    setIsSearchClosing(true);
-    setTimeout(() => {
-      setIsSearchOpen(false);
-      setIsSearchClosing(false);
-    }, 300);
   };
 
   useEffect(() => {
@@ -63,9 +50,28 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Menü açıkken arka planın kaymasını engelle
+  useEffect(() => {
+    if (isOpen) {
+      const previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = previousOverflow;
+      };
+    }
+  }, [isOpen]);
+
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-l from-white/90 via-white/80 to-white/70 backdrop-blur-xl shadow-sm">
+      {/*
+        Not: "transform-gpu" navbar'ı sabit bir GPU katmanına alıyor.
+        Mobil menü panelinin açılıp kapanması (transform ile) bu navbar'ın
+        backdrop-blur'unu yeniden compositing etmesine sebep oluyordu ve bu
+        bazı mobil taraycılarda (özellikle Safari) kısa bir "beyaz flaş"
+        olarak görünüyordu. Navbar'ı kendi sabit katmanına almak bu yeniden
+        compositing'i engelliyor.
+      */}
+      <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-l from-white/90 via-white/80 to-white/70 backdrop-blur-xl shadow-sm transform-gpu">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -121,30 +127,8 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Right Section - Search, Language, WhatsApp */}
+            {/* Right Section - Language, WhatsApp */}
             <div className="hidden lg:flex items-center space-x-3">
-              {/* Search Button */}
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="p-2.5 text-black hover:text-gray-600 hover:bg-gray-100/50 rounded-full transition-all"
-                aria-label="Search"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </button>
-
               {/* Language Toggle */}
               <button
                 onClick={toggleLanguage}
@@ -188,31 +172,12 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center space-x-2">
-              {/* Mobile Search */}
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-black hover:text-gray-600 hover:bg-gray-100/50 rounded-full transition-all"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </button>
-
               {/* Hamburger */}
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center justify-center p-2 rounded-full text-black hover:text-gray-600 hover:bg-gray-100/50 focus:outline-none transition-colors"
+                aria-expanded={isOpen}
+                aria-controls="mobile-menu-panel"
+                className="relative z-[70] inline-flex items-center justify-center p-2 rounded-full text-black hover:text-gray-600 hover:bg-gray-100/50 focus:outline-none transition-colors"
               >
                 <span className="sr-only">Menü</span>
                 {!isOpen ? (
@@ -252,10 +217,21 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Full Screen Menu */}
+      {/*
+        Mobil Tam Ekran Menü - sıfırdan yazıldı.
+        - Panel yukarıdan aşağı doğru kayarak açılıyor (transform: translateY),
+          eskisi gibi soldan/sağdan değil.
+        - Panel her zaman tam opak (bg-white); opacity/visibility geçişi YOK,
+          sadece transform değişiyor. Bu, blur'lu navbar'ın flaş vermesine
+          sebep olan opacity-tabanlı reveal'ı tamamen ortadan kaldırıyor.
+        - "transform-gpu" panel için de sabit bir compositing katmanı
+          oluşturuyor.
+      */}
       <div
-        className={`lg:hidden fixed inset-0 top-0 bg-white z-[60] transition-all duration-300 ease-in-out ${
-          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        id="mobile-menu-panel"
+        aria-hidden={!isOpen}
+        className={`lg:hidden fixed inset-0 bg-white z-[60] transform-gpu transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-y-0" : "-translate-y-full pointer-events-none"
         }`}
       >
         {/* Menu Content */}
@@ -395,126 +371,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
-      {/* Search Modal Popup */}
-      {isSearchOpen && (
-        <div
-          className={`fixed inset-0 z-[100] flex items-start justify-center pt-32 px-4 transition-all duration-700 ease-in-out ${
-            isSearchClosing ? "opacity-0" : "opacity-100"
-          }`}
-          onClick={closeSearch}
-        >
-          {/* Backdrop */}
-          <div
-            className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-all duration-700 ease-in-out ${
-              isSearchClosing ? "opacity-0" : "opacity-100"
-            }`}
-          ></div>
-
-          {/* Search Container */}
-          <div
-            className={`relative w-full max-w-2xl transition-all duration-700 ease-in-out ${
-              isSearchClosing
-                ? "opacity-0 -translate-y-10 scale-95"
-                : "opacity-100 translate-y-0 scale-100"
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl p-2 border border-gray-200/50">
-              {/* Search Input */}
-              <div className="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                <input
-                  type="text"
-                  placeholder={menuItems[language].search}
-                  className="w-full px-16 py-5 text-lg text-black placeholder:text-gray-400 bg-transparent rounded-xl focus:outline-none"
-                  autoFocus
-                />
-                <button
-                  onClick={closeSearch}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-all"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Quick Links */}
-              <div
-                className={`mt-4 px-4 pb-3 transition-all duration-1000 ease-in-out ${
-                  isSearchClosing
-                    ? "opacity-0 translate-y-4"
-                    : "opacity-100 translate-y-0"
-                }`}
-                style={{ transitionDelay: isSearchClosing ? "0ms" : "300ms" }}
-              >
-                <div className="text-xs text-gray-500 font-medium mb-2">
-                  {language === "TR" ? "Popüler Aramalar" : "Popular Searches"}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {["Düğme", "Fermuar", "Aksesuar", "Metal"].map(
-                    (tag, index) => (
-                      <button
-                        key={tag}
-                        className={`px-3 py-1.5 text-sm bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg transition-all hover:scale-105 ${
-                          !isSearchClosing ? "animate-fadeIn" : ""
-                        }`}
-                        style={{
-                          animationDelay: `${400 + index * 100}ms`,
-                          opacity: !isSearchClosing ? 1 : 0,
-                        }}
-                      >
-                        {tag}
-                      </button>
-                    ),
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* ESC Hint */}
-            <div
-              className={`mt-4 text-center transition-all duration-1000 ease-in-out ${
-                isSearchClosing
-                  ? "opacity-0 translate-y-2"
-                  : "opacity-100 translate-y-0"
-              }`}
-              style={{ transitionDelay: isSearchClosing ? "0ms" : "500ms" }}
-            >
-              <span className="text-sm text-white/80">
-                ESC {language === "TR" ? "ile kapat" : "to close"}
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-
-    
     </>
   );
 }

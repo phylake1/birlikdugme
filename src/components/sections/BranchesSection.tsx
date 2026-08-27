@@ -93,12 +93,16 @@ export default function BranchesSection() {
   return (
     <section
       id="branches"
-      className="branches-section py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
+      className="branches-section relative overflow-hidden py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-white pt-20 sm:pt-20 lg:pt-20"
       ref={containerRef}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-56 sm:w-80 h-56 sm:h-80 bg-orange-100/20 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-light text-black mb-3 sm:mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-black mb-3 sm:mb-4">
             {t("branchesTitle")}
           </h2>
           <div className="w-16 sm:w-20 h-px bg-orange-500 mx-auto mb-6" />
@@ -111,8 +115,10 @@ export default function BranchesSection() {
           {branches.map((branch, index) => (
             <div
               key={index}
-              className="branch-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+              className="branch-card group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100"
             >
+              <div className="absolute top-4 right-4 w-3 h-3 rounded-sm bg-orange-500 rotate-45 group-hover:rotate-[135deg] transition-transform duration-500 z-10" />
+
               {/* Harita */}
               <div className="w-full h-64 sm:h-72">
                 <iframe

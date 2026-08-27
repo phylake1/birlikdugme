@@ -84,18 +84,21 @@ export default function AboutSection() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20 items-center">
-          <div className="about-image relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl bg-white-100">
-            <img
-              src="/img/whybd.jpg"
-              alt="Birlik Düğme Hakkında"
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+          <div className="relative">
+            <div className="hidden sm:block absolute -top-4 -left-4 w-full h-full rounded-2xl sm:rounded-3xl border-2 border-orange-500/30" />
+            <div className="about-image relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl bg-white-100">
+              <img
+                src="/img/whybd.jpg"
+                alt="Birlik Düğme Hakkında"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+            </div>
           </div>
 
           <div>
-            <h2 className="about-content text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-6 sm:mb-8">
+            <h2 className="about-content text-3xl sm:text-4xl md:text-5xl font-light text-black mb-6 sm:mb-8">
               {t("aboutTitle")}
             </h2>
             <div className="about-content w-16 sm:w-20 lg:w-24 h-px bg-orange-500 mb-6 sm:mb-8" />
