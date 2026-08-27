@@ -1,6 +1,7 @@
 import Hero3D from "@/components/hero/Hero3D"
 import HeroSection from "@/components/sections/HeroSection"
 import ProductsSection from "@/components/sections/ProductsSection"
+import CategoryMarquee from "@/components/ui/CategoryMarquee"
 import BranchesSection from "@/components/sections/BranchesSection"
 import StatsSection from "@/components/sections/StatsSection"
 import AboutSection from "@/components/sections/AboutSection"
@@ -17,6 +18,7 @@ export default function Home() {
 
       <HeroSection />
       <ProductsSection />
+      <CategoryMarquee />
       <BranchesSection />
       <StatsSection />
       <AboutSection />
