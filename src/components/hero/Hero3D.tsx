@@ -2,7 +2,7 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import { Environment, useProgress } from "@react-three/drei"
+import { Environment } from "@react-three/drei"
 import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
@@ -17,23 +17,6 @@ export default function Hero3D() {
   const [step, setStep] = useState(0)
   const [isMobile, setIsMobile] = useState<boolean | null>(null) // null ile başlat
   const [mounted, setMounted] = useState(false)
-
-  // 3D model (ve stüdyo ortam ışığı HDR'ı) gerçekten belleğe/network'ten
-  // yüklenip yüklenmediğini drei'nin global yükleme yöneticisini izleyen
-  // useProgress ile takip ediyoruz. Component mount olması ile modelin
-  // fiilen görüntülenebilir olması aynı an değil; bu yüzden loader'ı
-  // sadece "mounted" olduğunda değil, useProgress "tamamlandı" dediğinde
-  // kapatıyoruz. Asset zaten önbellekteyse (useGLTF.preload sayesinde
-  // sayfa yüklenirken başlıyor) progress anında 100 olabilir, o zaman da
-  // loader gecikmeden kayboluyor.
-  const { progress, active } = useProgress()
-  const [modelReady, setModelReady] = useState(false)
-
-  useEffect(() => {
-    if (!active && progress >= 100) {
-      setModelReady(true)
-    }
-  }, [active, progress])
 
   // Component mount kontrolü
   useEffect(() => {
@@ -123,23 +106,6 @@ export default function Hero3D() {
 
       {/* Text Overlay Layer */}
       <OverlayText step={step} isMobile={isMobile} />
-
-      {/* Model Loader Overlay - düğme modeli (ve ortam HDR'ı) fiilen
-          yüklenip ilk kareyi çizene kadar canvas'ın üstünde kalıyor,
-          hazır olunca sadece fade-out ile kayboluyor. Böylece "sayfa
-          yüklendi ama model hâlâ gelmedi" boşluğu ortadan kalkıyor. */}
-      <div
-        className={`absolute inset-0 z-20 flex items-center justify-center bg-black transition-opacity duration-500 ease-out ${
-          modelReady ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
-      >
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-          <div className="text-white text-sm sm:text-base font-light tracking-wide">
-            Yükleniyor...
-          </div>
-        </div>
-      </div>
     </section>
   )
 }
