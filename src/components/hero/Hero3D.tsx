@@ -2,14 +2,46 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import { Environment } from "@react-three/drei"
-import { useEffect, useRef, useState } from "react"
+import { Environment, Lightformer } from "@react-three/drei"
+import { Component, ReactNode, Suspense, useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
 import Scene from "./Scene"
 import OverlayText from "./OverlayText"
 
 gsap.registerPlugin(ScrollTrigger)
+
+// Bir 3D parçası (model vb.) hata verirse tüm sayfanın çökmesini engeller.
+class SafeBoundary extends Component<{ children: ReactNode; fallback?: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+
+  componentDidCatch(error: unknown) {
+    console.error("[Hero3D] 3D içerik yüklenemedi:", error)
+  }
+
+  render() {
+    return this.state.failed ? this.props.fallback ?? null : this.props.children
+  }
+}
+
+// Stüdyo ışığı ortamı — harici HDR dosyası indirmez, tamamen prosedürel.
+// (Önceki <Environment preset="studio" /> raw.githack.com'dan HDR çekiyordu;
+// bu domain bazı ISP'lerde (ör. Kablonet) engelli olduğu için site çöküyordu.)
+function StudioEnvironment() {
+  return (
+    <Environment resolution={256} frames={1}>
+      <Lightformer form="rect" intensity={2} position={[0, 5, -2]} rotation-x={Math.PI / 2} scale={[10, 10, 1]} />
+      <Lightformer form="rect" intensity={1.5} position={[-5, 1, 1]} rotation-y={Math.PI / 2} scale={[8, 3, 1]} />
+      <Lightformer form="rect" intensity={1.5} position={[5, 1, 1]} rotation-y={-Math.PI / 2} scale={[8, 3, 1]} />
+      <Lightformer form="rect" intensity={0.8} position={[0, 0, 6]} scale={[10, 4, 1]} />
+      <Lightformer form="ring" intensity={1} position={[0, -4, -4]} scale={4} />
+    </Environment>
+  )
+}
 
 export default function Hero3D() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -76,32 +108,33 @@ export default function Hero3D() {
   }
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-screen bg-black"
-    >
+    <section ref={sectionRef} className="relative h-screen bg-black">
       {/* 3D Canvas Layer */}
       <div className="absolute inset-0 w-full h-full">
-        <Canvas
-          camera={{
-            position: isMobile ? [0, 0, 7] : [0, 0, 6],
-            fov: isMobile ? 55 : 45
-          }}
-          dpr={isMobile ? [1, 1.5] : [1, 2]}
-          performance={{ min: 0.5 }}
-        >
-          <ambientLight intensity={isMobile ? 0.7 : 0.5} />
-          <directionalLight
-            position={[5, 5, 5]}
-            intensity={isMobile ? 0.9 : 1}
-          />
-          <pointLight
-            position={[-5, -5, -5]}
-            intensity={isMobile ? 0.6 : 0.5}
-          />
-          <Scene step={step} progressRef={progressRef} isMobile={isMobile} />
-          <Environment preset="studio" />
-        </Canvas>
+        <SafeBoundary>
+          <Canvas
+            camera={{
+              position: isMobile ? [0, 0, 7] : [0, 0, 6],
+              fov: isMobile ? 55 : 45,
+            }}
+            dpr={isMobile ? [1, 1.5] : [1, 2]}
+            performance={{ min: 0.5 }}
+          >
+            <ambientLight intensity={isMobile ? 0.7 : 0.5} />
+            <directionalLight position={[5, 5, 5]} intensity={isMobile ? 0.9 : 1} />
+            <pointLight position={[-5, -5, -5]} intensity={isMobile ? 0.6 : 0.5} />
+
+            <SafeBoundary>
+              <Suspense fallback={null}>
+                <Scene step={step} progressRef={progressRef} isMobile={isMobile} />
+              </Suspense>
+            </SafeBoundary>
+
+            <SafeBoundary>
+              <StudioEnvironment />
+            </SafeBoundary>
+          </Canvas>
+        </SafeBoundary>
       </div>
 
       {/* Text Overlay Layer */}
